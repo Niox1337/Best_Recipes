@@ -38,9 +38,10 @@ class Recipe(models.Model):
     text = models.TextField(max_length=TEXT_LEN)
     ingredients = models.TextField(max_length=INGREDIENTS_LEN)
     views = models.IntegerField()
-    noOfRatings = models.IntegerField()
-    recipePicture = models.ImageField()
-    savedBy = models.ManyToManyField(UserProfile)
+    no_of_Ratings = models.IntegerField()
+    recipe_picture = models.ImageField()
+    saved_by = models.ManyToManyField(UserProfile)
+
     def __str__(self):
         return self.name
 
@@ -51,7 +52,7 @@ class Review(models.Model):
     creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     text = models.TextField(TEXT_LEN)
     image = models.ImageField()
-    noOfRatings = models.IntegerField()
+    no_of_ratings = models.IntegerField()
     # TODO: minvaluevalidtor and maxvaluevalidtor?
     review_rating = models.IntegerField(max)
 
@@ -64,7 +65,7 @@ class Rating(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     # True = recipe, False = review
-    recipeOrReview = models.BooleanField()
+    recipe_or_review = models.BooleanField()
     rating = models.IntegerField()
 
     def __str__(self):
