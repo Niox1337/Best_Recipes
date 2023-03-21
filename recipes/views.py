@@ -10,3 +10,15 @@ from recipes.models import UserProfile, Tag, Review, Rating, Recipe
 def index(request):
     response = render(request, 'recipes/index.html')
     return response
+
+def login(request):
+    response = render(request, 'recipes/login.html')
+    return response
+
+def sign_up(request):
+    response = render(request, 'recipes/sign_up.html')
+    return response
+
+def about(request):
+    response = render(request, 'recipes/about.html')
+    return response
