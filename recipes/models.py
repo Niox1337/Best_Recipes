@@ -1,6 +1,7 @@
 import django
 from django.db import models
 from datetime import date
+from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):

@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    
     <title>Sign Up Page</title>
         <link rel="stylesheet" href="login_register.css">
 </head>
 <body>
+    <script src="https://apis.google.com/js/platform.js" async defer>
+
+    </script>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
 <div>
-    <form id="user_form" method="post" action="{% url 'sign_up' %}"
+    <form id= "user_form" method="post" action="{% url 'sign_up' %}"
     enctype="multipart/form-data">
 
         {% csrf_token %}
@@ -17,6 +23,12 @@
         <input type="submit" name="submit" value="Register" />
 
 </form>
+</div>
+<div>
+    <button>
+        <meta name="google-signin-client_id" content="318064106161-j0pr3htfevifdqn951qospgu7p1qa0d4.apps.googleusercontent.com">
+        Sign in with google
+    </button>
 </div>
 </body>
 </html>
