@@ -22,7 +22,7 @@ class UserProfile(models.Model):
     # TODO: look at how rango handled user passwords etc.
     password = models.CharField(max_length=PASSWORD_LEN)
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN)
-    profile_picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.user_name

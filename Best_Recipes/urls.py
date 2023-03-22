@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from recipes import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +28,4 @@ urlpatterns = [
     path('sign_up', views.sign_up, name='sign_up'),
     path('about', views.about, name='about'),
     path('recipes/', include('recipes.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
