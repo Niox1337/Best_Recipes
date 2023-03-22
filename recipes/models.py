@@ -42,6 +42,7 @@ class Recipe(models.Model):
     TEXT_LEN = 3000
     INGREDIENTS_LEN = 1000
 
+    creator = models.ForeignKey(UserProfile, related_name="creator", on_delete=models.CASCADE)
     name = models.CharField(max_length=NAME_LEN, unique=True)
     text = models.TextField(max_length=TEXT_LEN)
     ingredients = models.TextField(max_length=INGREDIENTS_LEN)
