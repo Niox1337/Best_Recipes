@@ -53,3 +53,11 @@ def sign_up(request):
 def about(request):
     response = render(request, 'recipes/about.html')
     return response
+
+def profile(request, user_name_slug):
+    user = get_user_by_user_name_slug(user_name_slug)
+    context_dict = {
+        "user" : user
+    }
+    response = render(request, "recipes/profile.html", context=context_dict)
+    return response

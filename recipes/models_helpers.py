@@ -10,6 +10,15 @@ def get_user_by_user_name(user_name):
     else:
         return users[0]
 
+def get_user_by_user_name_slug(user_name_slug):
+    users = UserProfile.objects.all().filter(user_name_slug=user_name_slug)
+    if (len(users)) == 0:
+        raise Exception("Could not find user with user name slug " + user_name_slug)
+    elif (len(users) > 1):
+        raise Exception("More than one user with user name slug e " + user_name_slug)
+    else:
+        return users[0]
+
 def get_recipe_by_id(id):
     recipes = Recipe.objects.all().filter(id=id)
     if (len(recipes)) == 0:
