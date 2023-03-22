@@ -87,14 +87,18 @@ def edit_recipe(request):
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
     return response
 
-
-def profile(request, user_name_slug):
-    # TODO: handle non-existent user name slugs
-    user = get_user_by_user_name_slug(user_name_slug)
+def show_recipe(request, recipe_name_slug):
+    # TODO: handle non-existent recipe name slugs
+    recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
     context_dict = {
-        "user": user
+        "recipe" : recipe
     }
-    response = render(request, "recipes/profile.html", context=context_dict)
+
+    # TODO: updates on every refresh - not ideal but not the biggest problem in the world either
+    recipe.views += 1
+    recipe.save()
+
+    response = render(request, "recipes/show_recipe.html", context=context_dict)
     return response
 
 
@@ -105,8 +109,14 @@ def about(request):
 
 def profile(request, user_name_slug):
     user = get_user_by_user_name_slug(user_name_slug)
+
+    recipes = Recipe.objects.filter(creator=user)
+
     context_dict = {
-        "user": user
+        "user" : user,
+        "recipes": recipes
     }
+
+
     response = render(request, "recipes/profile.html", context=context_dict)
     return response

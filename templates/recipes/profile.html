@@ -8,7 +8,16 @@
 <body>
 <div>
     <div>
-        Welcome to your profile {{ user.user_name }}
+        Welcome to your profile {{ user.user.username }}
+    </div>
+    <div>
+        {% if recipes %}   
+            {% for recipe in recipes %}
+                <a href="/recipes/{{ recipe.recipe_name_slug }}">{{ recipe.name }}</a>
+            {% endfor %}
+        {% else %}
+            <p>You have no recipes at the moment!</p>
+        {% endif %}
     </div>
 </div>
 </body>

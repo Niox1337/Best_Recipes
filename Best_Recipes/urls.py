@@ -30,5 +30,7 @@ urlpatterns = [
     path('edit_recipe', views.edit_recipe, name='edit_recipe'),
     path('users/<slug:user_name_slug>/',
         views.profile, name='profile'),
+    path('recipes/<slug:recipe_name_slug>/',
+        views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

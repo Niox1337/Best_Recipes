@@ -18,6 +18,7 @@ class UserProfile(models.Model):
     # TODO: look at how rango handled user passwords etc.
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
     profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_name_slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         self.user_name_slug = slugify(self.user.username)
@@ -35,6 +36,7 @@ class Recipe(models.Model):
     TEXT_LEN = 3000
     INGREDIENTS_LEN = 1000
 
+    creator = models.ForeignKey(UserProfile, related_name="creator", on_delete=models.CASCADE)
     name = models.CharField(max_length=NAME_LEN, unique=True)
     text = models.TextField(max_length=TEXT_LEN)
     ingredients = models.TextField(max_length=INGREDIENTS_LEN)
@@ -44,13 +46,19 @@ class Recipe(models.Model):
     recipe_picture = models.ImageField()
     saved_by = models.ManyToManyField(UserProfile)
 
-    western = models.BooleanField()
-    asian = models.BooleanField()
-    indian = models.BooleanField()
-    chinese = models.BooleanField()
-    african = models.BooleanField()
-    american = models.BooleanField()
-    other = models.BooleanField()
+    recipe_name_slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.recipe_name_slug = slugify(self.name)
+        super(Recipe, self).save(*args, **kwargs)
+
+    western = models.BooleanField(default=False)
+    asian = models.BooleanField(default=False)
+    indian = models.BooleanField(default=False)
+    chinese = models.BooleanField(default=False)
+    african = models.BooleanField(default=False)
+    american = models.BooleanField(default=False)
+    other = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -8,6 +8,7 @@ import django
 from django.template.defaultfilters import slugify
 django.setup()
 from recipes.models import UserProfile, Tag, Review, Rating, Recipe
+from django.contrib.auth.models import User
 from recipes.models_helpers import *
 
 def populate():
@@ -233,11 +234,17 @@ vegetables\n\
 
 
 def add_user_profile(info_dict):
-    profile = UserProfile.objects.get_or_create(first_name=info_dict["first_name"])[0]
+
+    user = User.objects.get_or_create(username=info_dict["user_name"])[0]
+    # definitely wrong probably
+    user.password=info_dict["password"]
+    user.email=info_dict["email"]
+    
+    profile = UserProfile.objects.get_or_create(user=user)[0]
     profile.last_name=info_dict["last_name"]
-    profile.email=info_dict["email"]
+    
     profile.date_of_birth=info_dict["date_of_birth"]
-    profile.password=info_dict["password"]
+
     profile.user_description=info_dict["user_description"]
     profile.profile_picture=info_dict["profile_picture"]
     profile.user_name=info_dict["user_name"]
@@ -246,7 +253,10 @@ def add_user_profile(info_dict):
 def add_recipe(info_dict):
     keys = info_dict["keys"]
     other = info_dict["other"]
-    recipe = Recipe.objects.get_or_create(id=other["id"])[0]
+
+    creator = get_user_by_user_name(keys["creator"])
+
+    recipe = Recipe.objects.get_or_create(creator=creator, id=other["id"])[0]
 
     recipe.name = other["name"]
     recipe.text = other["text"]
