@@ -77,6 +77,11 @@ def show_recipe(request, recipe_name_slug):
     context_dict = {
         "recipe" : recipe
     }
+
+    # TODO: updates on every refresh - not ideal but not the biggest problem in the world either
+    recipe.views += 1
+    recipe.save()
+
     response = render(request, "recipes/show_recipe.html", context=context_dict)
     return response
 
