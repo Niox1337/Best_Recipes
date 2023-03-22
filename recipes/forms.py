@@ -17,4 +17,16 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(forms.ModelForm):
     pass
 
-
+class EditRecipeForm(forms.ModelForm):
+    name = forms.CharField(max_length=Recipe.NAME_LEN,
+                           help_text="Recipe Name")
+    ingredients = forms.TextInput()
+    text = forms.TextInput()
+   
+    class Meta:
+        model = Recipe
+        fields = [
+            'name',
+            "ingredients",
+            "text",
+        ]

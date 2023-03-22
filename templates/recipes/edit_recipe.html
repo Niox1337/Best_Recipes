@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Recipe</title>
+</head>
+<body>
+<div>
+    <form id="edit_recipe_form" method="post" action="{% url 'edit_recipe' %}"
+    enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ edit_recipe_form.as_p }}
+
+        {% for tag in tags %}
+        <input type="checkbox" id="{{ tag.tag }}" name="{{ tag.tag }}" value="{{ tag.tag }}">
+        <label for="{{ tag.tag }}">{{ tag.tag }}</label>
+<br/>
+        {% endfor %}
+
+        <br/>
+
+
+        <input type="submit" name="submit" value="Submit Recipe" />
+
+</form>
+
+
+</div>
+</body>
+</html>
