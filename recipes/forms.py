@@ -18,5 +18,38 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'date_of_birth', 'user_description', 'profile_picture')
+        fields = [
+            'user_name',
+        ]
 
+
+class LoginForm(forms.ModelForm):
+    pass
+
+class EditRecipeForm(forms.ModelForm):
+    name = forms.CharField(max_length=Recipe.NAME_LEN,
+                           help_text="Recipe Name")
+    ingredients = forms.TextInput()
+    text = forms.TextInput()
+    western = forms.CheckboxInput()
+    asian = forms.CheckboxInput()
+    indian = forms.CheckboxInput()
+    chinese = forms.CheckboxInput()
+    african = forms.CheckboxInput()
+    american = forms.CheckboxInput()
+    other = forms.CheckboxInput()
+   
+    class Meta:
+        model = Recipe
+        fields = [
+            'name',
+            "ingredients",
+            "text",
+            "western",
+            "asian",
+            "indian",
+            "chinese",
+            "african",
+            "american",
+            "other",
+        ]

@@ -49,6 +49,39 @@ def sign_up(request):
     response = render(request, 'recipes/sign_up.html', context=context_dict)
     return response
 
+def edit_recipe(request):
+    
+    if request.method == 'POST':
+
+        print(request.POST)
+
+        edit_recipe_form = EditRecipeForm(request.POST)
+        
+        if edit_recipe_form.is_valid():
+            edit_recipe_form.save()
+        else:
+            print(edit_recipe_form.errors)
+
+    else:
+        edit_recipe_form = EditRecipeForm()
+        
+
+    context_dict = {
+        "edit_recipe_form" : edit_recipe_form,
+        "tags": Tag.objects.all()
+    }
+
+    response = render(request, 'recipes/edit_recipe.html', context=context_dict)
+    return response
+
+def profile(request, user_name_slug):
+    # TODO: handle non-existent user name slugs
+    user = get_user_by_user_name_slug(user_name_slug)
+    context_dict = {
+        "user" : user
+    }
+    response = render(request, "recipes/profile.html", context=context_dict)
+    return response
 
 def about(request):
     response = render(request, 'recipes/about.html')

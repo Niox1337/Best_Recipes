@@ -1,6 +1,7 @@
 import django
 from django.db import models
 from datetime import date
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
@@ -15,8 +16,14 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=LAST_NAME_LEN)
     date_of_birth = models.DateField(default=django.utils.timezone.now)
     # TODO: look at how rango handled user passwords etc.
-    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_images')
+    password = models.CharField(max_length=PASSWORD_LEN)
+    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN)
+    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_name_slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.user_name_slug = slugify(self.user_name)
+        super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.user_name
@@ -35,8 +42,17 @@ class Recipe(models.Model):
     ingredients = models.TextField(max_length=INGREDIENTS_LEN)
     views = models.IntegerField(default=0)
     no_of_ratings = models.IntegerField(default=0)
+    # TODO: add recipe_picture upload to form and poplation script
     recipe_picture = models.ImageField()
     saved_by = models.ManyToManyField(UserProfile)
+
+    western = models.BooleanField()
+    asian = models.BooleanField()
+    indian = models.BooleanField()
+    chinese = models.BooleanField()
+    african = models.BooleanField()
+    american = models.BooleanField()
+    other = models.BooleanField()
 
     def __str__(self):
         return self.name
@@ -71,7 +87,15 @@ class Rating(models.Model):
 
 
 class Tag(models.Model):
-    TAG_MAX_LEN = 50
+    TAG_MAX_LEN = 50#
+
+    WESTERN_TAG = "Western"
+    ASIAN_TAG = "Asian"
+    INDIAN_TAG = "Indian"
+    CHINESE_TAG = "Chinese"
+    AFRICAN_TAG = "African"
+    AMERICAN_TAG = "American"
+    OTHER_TAG = "Other"
 
     tag = models.CharField(max_length=TAG_MAX_LEN)
     # TODO: we will probably need special logic to call when a recipe is deleted to handle tag
