@@ -1,6 +1,7 @@
 import django
 from django.db import models
 from datetime import date
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
@@ -23,6 +24,11 @@ class UserProfile(models.Model):
     password = models.CharField(max_length=PASSWORD_LEN)
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN)
     profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_name_slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.user_name_slug = slugify(self.user_name)
+        super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.user_name

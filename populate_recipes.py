@@ -5,6 +5,7 @@ from random import randint
 from datetime import date
 
 import django
+from django.template.defaultfilters import slugify
 django.setup()
 from recipes.models import UserProfile, Tag, Review, Rating, Recipe
 from recipes.models_helpers import *
@@ -14,6 +15,7 @@ def populate():
     USER_ONE_USERNAME = "UserOne"
     USER_TWO_USERNAME = "UserTwo"
     USER_THREE_USERNAME = "UserThree"
+    NEEDS_SLUGGED_USERNAME = "Slug Me Up"
 
     test_users = [
         {
@@ -45,6 +47,16 @@ def populate():
             "user_description": "The third test user",
             "profile_picture": None,
             "user_name": USER_THREE_USERNAME,
+        },
+        {
+            "first_name": "User Four",
+            "last_name": "Lou",
+            "email": "veryffffake@notreal.no",
+            "date_of_birth": date.today(),
+            "password": "FIXTHIS",
+            "user_description": "The fourt test user",
+            "profile_picture": None,
+            "user_name": NEEDS_SLUGGED_USERNAME,
         },
     ]
 
