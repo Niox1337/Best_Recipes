@@ -7,6 +7,7 @@ from recipes.models import UserProfile, Tag, Review, Rating, Recipe
 from recipes.forms import *
 from recipes.models_helpers import *
 
+
 # Create your views here.
 
 def index(request):
@@ -14,9 +15,21 @@ def index(request):
     return response
 
 
-def login(request):
-    response = render(request, 'recipes/login.html')
-    return response
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse("recipes:index"))
+            else:
+                return HttpResponse("Your account is currently on hold \nPlease contact admins")
+        else:
+            return HttpResponse("Invalid username or password")
+    else:
+        return render(request, 'recipes/login.html')
 
 
 def sign_up(request):
@@ -50,14 +63,14 @@ def sign_up(request):
     response = render(request, 'recipes/sign_up.html', context=context_dict)
     return response
 
+
 def edit_recipe(request):
-    
     if request.method == 'POST':
 
         print(request.POST)
 
         edit_recipe_form = EditRecipeForm(request.POST)
-        
+
         if edit_recipe_form.is_valid():
             edit_recipe_form.save()
         else:
@@ -65,33 +78,35 @@ def edit_recipe(request):
 
     else:
         edit_recipe_form = EditRecipeForm()
-        
 
     context_dict = {
-        "edit_recipe_form" : edit_recipe_form,
+        "edit_recipe_form": edit_recipe_form,
         "tags": Tag.objects.all()
     }
 
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
     return response
 
+
 def profile(request, user_name_slug):
     # TODO: handle non-existent user name slugs
     user = get_user_by_user_name_slug(user_name_slug)
     context_dict = {
-        "user" : user
+        "user": user
     }
     response = render(request, "recipes/profile.html", context=context_dict)
     return response
+
 
 def about(request):
     response = render(request, 'recipes/about.html')
     return response
 
+
 def profile(request, user_name_slug):
     user = get_user_by_user_name_slug(user_name_slug)
     context_dict = {
-        "user" : user
+        "user": user
     }
     response = render(request, "recipes/profile.html", context=context_dict)
     return response
