@@ -13,11 +13,7 @@
 
         {{ edit_recipe_form.as_p }}
 
-        {% for tag in tags %}
-        <input type="checkbox" id="{{ tag.tag }}" name="{{ tag.tag }}" value="{{ tag.tag }}">
-        <label for="{{ tag.tag }}">{{ tag.tag }}</label>
-<br/>
-        {% endfor %}
+
 
         <br/>
 

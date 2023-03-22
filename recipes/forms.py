@@ -22,6 +22,13 @@ class EditRecipeForm(forms.ModelForm):
                            help_text="Recipe Name")
     ingredients = forms.TextInput()
     text = forms.TextInput()
+    western = forms.CheckboxInput()
+    asian = forms.CheckboxInput()
+    indian = forms.CheckboxInput()
+    chinese = forms.CheckboxInput()
+    african = forms.CheckboxInput()
+    american = forms.CheckboxInput()
+    other = forms.CheckboxInput()
    
     class Meta:
         model = Recipe
@@ -29,4 +36,11 @@ class EditRecipeForm(forms.ModelForm):
             'name',
             "ingredients",
             "text",
+            "western",
+            "asian",
+            "indian",
+            "chinese",
+            "african",
+            "american",
+            "other",
         ]

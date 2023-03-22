@@ -50,6 +50,14 @@ class Recipe(models.Model):
     recipe_picture = models.ImageField()
     saved_by = models.ManyToManyField(UserProfile)
 
+    western = models.BooleanField()
+    asian = models.BooleanField()
+    indian = models.BooleanField()
+    chinese = models.BooleanField()
+    african = models.BooleanField()
+    american = models.BooleanField()
+    other = models.BooleanField()
+
     def __str__(self):
         return self.name
 
@@ -83,7 +91,15 @@ class Rating(models.Model):
 
 class Tag(models.Model):
 
-    TAG_MAX_LEN = 50
+    TAG_MAX_LEN = 50#
+
+    WESTERN_TAG = "Western"
+    ASIAN_TAG = "Asian"
+    INDIAN_TAG = "Indian"
+    CHINESE_TAG = "Chinese"
+    AFRICAN_TAG = "African"
+    AMERICAN_TAG = "American"
+    OTHER_TAG = "Other"
 
     tag = models.CharField(max_length=TAG_MAX_LEN)
     # TODO: we will probably need special logic to call when a recipe is deleted to handle tag

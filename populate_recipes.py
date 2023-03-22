@@ -120,7 +120,7 @@ vegetables\n\
             "recipe_ids" : [test_recipe_one["other"]["id"]]
         },
         "other" : {
-            "tag" : "Western"
+            "tag" : Tag.WESTERN_TAG
         }
     }
 
@@ -129,12 +129,63 @@ vegetables\n\
             "recipe_ids" : [test_recipe_two["other"]["id"]]
         },
         "other" : {
-            "tag" : "Asian"
+            "tag" : Tag.ASIAN_TAG
         }
     }
 
+    indian_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.INDIAN_TAG
+        }
+    }
+
+    chinese_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.CHINESE_TAG
+        }
+    }
+
+    african_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.AFRICAN_TAG
+        }
+    }
+
+    american_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.AMERICAN_TAG
+        }
+    }
+
+    other_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.OTHER_TAG
+        }
+    }
+
+    # TODO: figure out how to handle tag initlization seperatetly from population script
     add_tag(western_tag)
     add_tag(asian_tag)
+    add_tag(indian_tag)
+    add_tag(chinese_tag)
+    add_tag(african_tag)
+    add_tag(american_tag)
+    add_tag(other_tag)
 
     test_recipe_review = {
         "keys": {
