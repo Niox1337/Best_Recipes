@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from recipes.models import UserProfile, Tag, Review, Rating, Recipe
 from recipes.forms import *
+from recipes.models_helpers import *
 
 # Create your views here.
 
@@ -59,6 +60,14 @@ def edit_recipe(request):
     }
 
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
+    return response
+
+def profile(request, user_name_slug):
+    user = get_user_by_user_name_slug(user_name_slug)
+    context_dict = {
+        "user" : user
+    }
+    response = render(request, "recipes/profile.html", context=context_dict)
     return response
 
 def about(request):
