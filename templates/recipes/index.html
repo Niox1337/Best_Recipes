@@ -42,6 +42,8 @@
     </style>
 </head>
 <body>
+
+
     <div id="search-box-container">
         <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES">
     </div>
@@ -49,6 +51,16 @@
         &#128293<strong>Trending</strong>
         <div class="recipe-block">
         </div>
+    </div>
+    <div>
+    {% if user.is_authenticated %}
+    logged in as {{ user.username }}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %} 
+    not logged in
+    {% endif %}
+
+    
     </div>
 </body>
 </html>

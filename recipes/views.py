@@ -31,6 +31,9 @@ def user_login(request):
     else:
         return render(request, 'recipes/login.html')
 
+def user_logout(request):
+    logout(request)
+    return render(request, 'recipes/index.html')
 
 def sign_up(request):
     registered = False
