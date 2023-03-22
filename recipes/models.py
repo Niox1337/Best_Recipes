@@ -51,13 +51,19 @@ class Recipe(models.Model):
     recipe_picture = models.ImageField()
     saved_by = models.ManyToManyField(UserProfile)
 
-    western = models.BooleanField()
-    asian = models.BooleanField()
-    indian = models.BooleanField()
-    chinese = models.BooleanField()
-    african = models.BooleanField()
-    american = models.BooleanField()
-    other = models.BooleanField()
+    recipe_name_slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.recipe_name_slug = slugify(self.name)
+        super(Recipe, self).save(*args, **kwargs)
+
+    western = models.BooleanField(default=False)
+    asian = models.BooleanField(default=False)
+    indian = models.BooleanField(default=False)
+    chinese = models.BooleanField(default=False)
+    african = models.BooleanField(default=False)
+    american = models.BooleanField(default=False)
+    other = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

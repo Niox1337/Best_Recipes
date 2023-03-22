@@ -28,6 +28,15 @@ def get_recipe_by_id(id):
     else:
         return recipes[0]
     
+def get_recipe_by_recipe_name_slug(recipe_name_slug):
+    recipes = Recipe.objects.all().filter(recipe_name_slug=recipe_name_slug)
+    if (len(recipes)) == 0:
+        raise Exception("Could not find recipe with recipe name slug " + recipe_name_slug)
+    elif (len(recipes) > 1):
+        raise Exception("More than one recipe with recipe name slug " + recipe_name_slug)
+    else:
+        return recipes[0]
+    
 def get_review_by_id(id):
     reviews = Review.objects.all().filter(id=id)
     if (len(reviews)) == 0:

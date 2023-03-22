@@ -71,6 +71,15 @@ def profile(request, user_name_slug):
     response = render(request, "recipes/profile.html", context=context_dict)
     return response
 
+def show_recipe(request, recipe_name_slug):
+    # TODO: handle non-existent recipe name slugs
+    recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+    context_dict = {
+        "recipe" : recipe
+    }
+    response = render(request, "recipes/show_recipe.html", context=context_dict)
+    return response
+
 def about(request):
     response = render(request, 'recipes/about.html')
     return response
