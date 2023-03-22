@@ -31,7 +31,8 @@ def sign_up(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            profile.picture = request.FILES['picture']
+            if 'picture' in request.FILES:
+                profile.profile_picture = request.FILES['picture']
             profile.save()
             registered = True
         else:

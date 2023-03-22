@@ -6,27 +6,25 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     FIRST_NAME_LEN = 50
     LAST_NAME_LEN = 50
     USER_DESCRIPTION_LEN = 200
 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # TODO: do we need a minimum length for user_name, password, etc?
-    first_name = models.CharField(max_length=FIRST_NAME_LEN)
-    last_name = models.CharField(max_length=LAST_NAME_LEN)
-    date_of_birth = models.DateField(default=django.utils.timezone.now)
+    first_name = models.CharField(max_length=FIRST_NAME_LEN, blank=True)
+    last_name = models.CharField(max_length=LAST_NAME_LEN, blank=True)
+    date_of_birth = models.DateField(default=django.utils.timezone.now, blank=True)
     # TODO: look at how rango handled user passwords etc.
-    password = models.CharField(max_length=PASSWORD_LEN)
-    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN)
+    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
     profile_picture = models.ImageField(upload_to='profile_images', blank=True)
-    user_name_slug = models.SlugField()
 
     def save(self, *args, **kwargs):
-        self.user_name_slug = slugify(self.user_name)
+        self.user_name_slug = slugify(self.user.username)
         super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.user_name
+        return self.user.username
 
     class Meta:
         verbose_name_plural = "User Profiles"
