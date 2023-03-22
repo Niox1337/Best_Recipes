@@ -5,33 +5,27 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     FIRST_NAME_LEN = 50
     LAST_NAME_LEN = 50
-    EMAIL_LEN = 320
-    PASSWORD_LEN = 255
     USER_DESCRIPTION_LEN = 200
-    USER_NAME_LEN = 50
 
     # TODO: do we need a minimum length for user_name, password, etc?
-    user_name = models.CharField(max_length=USER_NAME_LEN, unique=True)
     first_name = models.CharField(max_length=FIRST_NAME_LEN)
     last_name = models.CharField(max_length=LAST_NAME_LEN)
-    email = models.EmailField(max_length=EMAIL_LEN)
     date_of_birth = models.DateField(default=django.utils.timezone.now)
     # TODO: look at how rango handled user passwords etc.
-    password = models.CharField(max_length=PASSWORD_LEN)
-    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN)
-    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_images')
 
     def __str__(self):
         return self.user_name
-    
+
     class Meta:
         verbose_name_plural = "User Profiles"
 
-class Recipe(models.Model):
 
+class Recipe(models.Model):
     NAME_LEN = 255
     TEXT_LEN = 3000
     INGREDIENTS_LEN = 1000
@@ -47,8 +41,8 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-class Review(models.Model):
 
+class Review(models.Model):
     TEXT_LEN = 2000
 
     creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -62,8 +56,8 @@ class Review(models.Model):
     def __str__(self):
         return self.creator.user_name + " review " + str(self.id)
 
-class Rating(models.Model):
 
+class Rating(models.Model):
     creator = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, null=True, blank=True)
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True, blank=True)
@@ -75,8 +69,8 @@ class Rating(models.Model):
     def __str__(self):
         return self.creator.user_name + " rating " + str(self.id)
 
-class Tag(models.Model):
 
+class Tag(models.Model):
     TAG_MAX_LEN = 50
 
     tag = models.CharField(max_length=TAG_MAX_LEN)
