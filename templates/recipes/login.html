@@ -17,7 +17,7 @@
 <div>
     <h1>Log In</h1>
     <div>
-        <form id="login_form" method="post" action="{% url 'recipes:login' %}">
+        <form id="login_form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
             Username: <input type="text" name="username" value="" size="50" class="login"/>
             <br />
