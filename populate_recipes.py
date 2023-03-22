@@ -246,7 +246,10 @@ def add_user_profile(info_dict):
 def add_recipe(info_dict):
     keys = info_dict["keys"]
     other = info_dict["other"]
-    recipe = Recipe.objects.get_or_create(id=other["id"])[0]
+
+    creator = get_user_by_user_name(keys["creator"])
+
+    recipe = Recipe.objects.get_or_create(creator=creator, id=other["id"])[0]
 
     recipe.name = other["name"]
     recipe.text = other["text"]

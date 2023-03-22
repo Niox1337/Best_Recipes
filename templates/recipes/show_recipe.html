@@ -7,9 +7,22 @@
 <body>
 <div>
 
+    <h3>{{ recipe.name }} by {{ recipe.creator.user_name }} </h3>
     {{ recipe.recipe_name_slug }}
 
-    {{ recipe.views }}
+    <h4>Ingredients</h4>
+
+    {{ recipe.ingredients }}
+
+    <h4>Instructions</h4>
+
+    {{ recipe.text }}
+
+    <h3>Tags</h3>
+
+    PUT THE TAGS HERE
+    
+    <p><strong>Views:</strong> {{ recipe.views }}</p>
 
 </div>
 </body>
