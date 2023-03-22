@@ -63,6 +63,7 @@ def edit_recipe(request):
     return response
 
 def profile(request, user_name_slug):
+    # TODO: handle non-existent user name slugs
     user = get_user_by_user_name_slug(user_name_slug)
     context_dict = {
         "user" : user

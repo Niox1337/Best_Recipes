@@ -47,6 +47,7 @@ class Recipe(models.Model):
     ingredients = models.TextField(max_length=INGREDIENTS_LEN)
     views = models.IntegerField(default=0)
     no_of_ratings = models.IntegerField(default=0)
+    # TODO: add recipe_picture upload to form and poplation script
     recipe_picture = models.ImageField()
     saved_by = models.ManyToManyField(UserProfile)
 
