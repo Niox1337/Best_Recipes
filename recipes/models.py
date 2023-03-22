@@ -18,6 +18,7 @@ class UserProfile(models.Model):
     # TODO: look at how rango handled user passwords etc.
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
     profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    user_name_slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         self.user_name_slug = slugify(self.user.username)
