@@ -41,6 +41,7 @@ class RatingsTest(TestCase):
     self.assertEquals(rating.rating>=0, True)
 
 
+
     
 
 
