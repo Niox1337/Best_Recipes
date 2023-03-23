@@ -13,6 +13,21 @@ Rating
 '''
 
 class SignUpTest(TestCase):
+
+    def setUp(self):
+       info_dict={
+            "first_name":"testFirstName",
+            "last_name":"testLastName",
+            "email":"testEmail",
+            "dateOfBirth":date.today(),
+            "password":"testPassword",
+            "user_description":"testUserDescription",
+            "profile_picture":"testProfilePicture",
+            "user_name":"testUserName",
+            }
+    self.user=add_user_profile(info_dict)
+
+
     def test_if_sign_up_adds_user(self):
         """""
         Adding a test user and checking if the information has been added to the database
@@ -28,7 +43,53 @@ class SignUpTest(TestCase):
             "user_name":"testUserName",
         }
         add_user_profile(info_dict)
-        self.assertEqual(info_dict,)
+        self.assertEqual(str(self.user), 'test_user')
+
+    def test_max_lengths(self):
+        self.assertEqual(
+            self.user._meta.get_field('user_name').max_length, 
+            UserProfile.USER_NAME_LEN
+        )
+        self.assertEqual(
+            self.user._meta.get_field('first_name').max_length, 
+            UserProfile.FIRST_NAME_LEN
+        )
+        self.assertEqual(
+            self.user._meta.get_field('last_name').max_length, 
+            UserProfile.LAST_NAME_LEN
+        )
+        self.assertEqual(
+            self.user._meta.get_field('email').max_length, 
+            UserProfile.EMAIL_LEN
+        )
+        self.assertEqual(
+            self.user._meta.get_field('password').max_length, 
+            UserProfile.PASSWORD_LEN
+        )
+        self.assertEqual(
+            self.user._meta.get_field('user_description').max_length, 
+            UserProfile.USER_DESCRIPTION_LEN
+        )
+
+    def test_default_reviews(self):
+        """
+        Check the recipe initially has zero reviews
+        """
+        test_recipe_one = {
+        "keys": {
+            "creator": USER_ONE_USERNAME,
+            "savedBy": [USER_THREE_USERNAME]
+        },
+        "other": {
+            "name": "testName",
+            "text": "testText",
+            "noOfRatings": 0,
+            "recipePicture": None,
+            "id": 1,
+            "views": 0
+        }
+        }
+
 
 
 
@@ -39,6 +100,8 @@ class RatingsTest(TestCase):
     """
     rating = add_rating(info_dict)
     self.assertEquals(rating.rating>=0, True)
+
+
 
 
 
