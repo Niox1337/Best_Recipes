@@ -147,6 +147,7 @@ def new_recipe(request, user_name_slug):
     return response
 
 
+
 def show_tag(request, tag_name_slug):
     # TODO: consder making recipes None by default and making list when tag found so we can do {% if recipes %} later on
     recipes = []
@@ -162,6 +163,9 @@ def show_tag(request, tag_name_slug):
                 recipes.append(recipe)
     if not tag_found:
         raise Exception("Tag " + tag_name_slug + " not found")
+
+    if (len(recipes) == 0):
+        recipes = None
 
     context_dict = {
         "tag": found_tag,
