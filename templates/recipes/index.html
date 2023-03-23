@@ -1,11 +1,71 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+
 <html lang="en">
 <head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <script>
+        function toggleProfileBox() {
+            var isHidden = $('#user_profile_box_links').is(':hidden');
+            if (isHidden) {
+                $('#user_profile_box_links').show();
+            }
+            else {
+                $('#user_profile_box_links').hide();
+            }
+        }
+    </script>
+
     <meta charset="UTF-8">
     <title>Best Recipes</title>
     <link rel="stylesheet" href="index_style.css">
+    <style>
+        body{
+            background-image: url("/static/index_background.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .recipe-block{
+            display: flex;
+            flex-direction: row;
+            background-color: aliceblue;
+            opacity: 0.2
+        }
+
+        .search-box{
+            margin: 0 0 0 40px;
+            padding: 0 4px;
+            flex: 1;
+            flex-basis: 9px;
+        }
+
+        #user_profile_icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        #search-box-container{
+            margin-bottom: 16px;
+            position: relative;
+            height: 56px;
+            width: 550px;
+        }
+        #input{
+            margin-bottom: 10px;
+            position: relative;
+            height: 50px;
+            width: 500px;
+            border-radius: 50px;
+}
+    </style>
 </head>
 <body>
+
+
     <div id="search-box-container">
         <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES">
     </div>
@@ -13,6 +73,26 @@
         &#128293<strong>Trending</strong>
         <div class="recipe-block">
         </div>
+    </div>
+    <div>
+
+
+    <div id="user_profile_box">
+        <img id="user_profile_icon" src="/static/user_profile_icon.png" onclick="toggleProfileBox()"/>
+
+        <div id="user_profile_box_links">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' user.username %}">Your Profile</a>
+            <a href="{% url 'new_recipe' user.username %}">New Recipe</a>
+            <a href="{% url 'favourites' user.username %}">Favourites</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% else %} 
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'sign_up' %}">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+    
     </div>
 </body>
 </html>

@@ -5,8 +5,10 @@ from random import randint
 from datetime import date
 
 import django
+from django.template.defaultfilters import slugify
 django.setup()
 from recipes.models import UserProfile, Tag, Review, Rating, Recipe
+from django.contrib.auth.models import User
 from recipes.models_helpers import *
 
 def populate():
@@ -14,6 +16,7 @@ def populate():
     USER_ONE_USERNAME = "UserOne"
     USER_TWO_USERNAME = "UserTwo"
     USER_THREE_USERNAME = "UserThree"
+    NEEDS_SLUGGED_USERNAME = "Slug Me Up"
 
     test_users = [
         {
@@ -45,6 +48,16 @@ def populate():
             "user_description": "The third test user",
             "profile_picture": None,
             "user_name": USER_THREE_USERNAME,
+        },
+        {
+            "first_name": "User Four",
+            "last_name": "Lou",
+            "email": "veryffffake@notreal.no",
+            "date_of_birth": date.today(),
+            "password": "FIXTHIS",
+            "user_description": "The fourt test user",
+            "profile_picture": None,
+            "user_name": NEEDS_SLUGGED_USERNAME,
         },
     ]
 
@@ -108,7 +121,7 @@ vegetables\n\
             "recipe_ids" : [test_recipe_one["other"]["id"]]
         },
         "other" : {
-            "tag" : "Western"
+            "tag" : Tag.WESTERN_TAG
         }
     }
 
@@ -117,12 +130,63 @@ vegetables\n\
             "recipe_ids" : [test_recipe_two["other"]["id"]]
         },
         "other" : {
-            "tag" : "Asian"
+            "tag" : Tag.ASIAN_TAG
         }
     }
 
+    indian_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.INDIAN_TAG
+        }
+    }
+
+    chinese_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.CHINESE_TAG
+        }
+    }
+
+    african_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.AFRICAN_TAG
+        }
+    }
+
+    american_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.AMERICAN_TAG
+        }
+    }
+
+    other_tag = {
+        "keys" : {
+            "recipe_ids" : []
+        },
+        "other" : {
+            "tag" : Tag.OTHER_TAG
+        }
+    }
+
+    # TODO: figure out how to handle tag initlization seperatetly from population script
     add_tag(western_tag)
     add_tag(asian_tag)
+    add_tag(indian_tag)
+    add_tag(chinese_tag)
+    add_tag(african_tag)
+    add_tag(american_tag)
+    add_tag(other_tag)
 
     test_recipe_review = {
         "keys": {
@@ -170,11 +234,17 @@ vegetables\n\
 
 
 def add_user_profile(info_dict):
-    profile = UserProfile.objects.get_or_create(first_name=info_dict["first_name"])[0]
+
+    user = User.objects.get_or_create(username=info_dict["user_name"])[0]
+    # definitely wrong probably
+    user.password=info_dict["password"]
+    user.email=info_dict["email"]
+    
+    profile = UserProfile.objects.get_or_create(user=user)[0]
     profile.last_name=info_dict["last_name"]
-    profile.email=info_dict["email"]
+    
     profile.date_of_birth=info_dict["date_of_birth"]
-    profile.password=info_dict["password"]
+
     profile.user_description=info_dict["user_description"]
     profile.profile_picture=info_dict["profile_picture"]
     profile.user_name=info_dict["user_name"]
@@ -183,7 +253,10 @@ def add_user_profile(info_dict):
 def add_recipe(info_dict):
     keys = info_dict["keys"]
     other = info_dict["other"]
-    recipe = Recipe.objects.get_or_create(id=other["id"])[0]
+
+    creator = get_user_by_user_name(keys["creator"])
+
+    recipe = Recipe.objects.get_or_create(creator=creator, id=other["id"])[0]
 
     recipe.name = other["name"]
     recipe.text = other["text"]

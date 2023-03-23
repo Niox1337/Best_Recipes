@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Recipe</title>
+</head>
+<body>
+<div>
+    <form id="edit_recipe_form" method="post" action="{% url 'new_recipe' user.username %}"
+    enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ edit_recipe_form.as_p }}
+
+
+
+        <br/>
+
+
+        <input type="submit" name="submit" value="Submit Recipe" />
+
+</form>
+
+
+</div>
+</body>
+</html>

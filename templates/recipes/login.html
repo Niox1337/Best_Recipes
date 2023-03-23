@@ -2,19 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Login</title>
     <link rel="stylesheet" href="login_register.css">
+    <style>
+        body{
+            background-image: url("/static/login_background.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <div>
+    <h1>Log In</h1>
     <div>
-        <input type="email" class="login" placeholder="Email">
+        <form id="login_form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            Username: <input type="text" name="username" value="" size="50" class="login"/>
+            <br />
+            Password: <input type="password" name="password" value="" size="50" class="login"/>
+            <br />
+            <input type="submit" value="submit" />
+        </form>
+
     </div>
     <div>
-        <input type="password" class="login" placeholder="Password">
+
+        <p style="color: cornflowerblue">
+            Don't have an account yet?
+            <a href="{% url 'sign_up' %}">Join us now!</a>
+        </p>
+
     </div>
     <div>
-        <button>Log in</button>
     </div>
 </div>
 </body>

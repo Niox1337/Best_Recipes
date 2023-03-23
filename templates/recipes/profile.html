@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile</title>
+    <link rel="stylesheet" href="login_register.css">
+</head>
+<body>
+<div>
+    <div>
+        Welcome to your profile {{ user.user.username }}
+    </div>
+    <div>
+        {% if recipes %}   
+            {% for recipe in recipes %}
+                <a href="/recipes/{{ recipe.recipe_name_slug }}">{{ recipe.name }}</a>
+            {% endfor %}
+        {% else %}
+            <p>You have no recipes at the moment!</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
