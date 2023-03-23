@@ -31,6 +31,9 @@ def user_login(request):
     else:
         return render(request, 'recipes/login.html')
 
+def user_logout(request):
+    logout(request)
+    return render(request, 'recipes/index.html')
 
 def sign_up(request):
     registered = False
@@ -63,7 +66,7 @@ def sign_up(request):
     response = render(request, 'recipes/sign_up.html', context=context_dict)
     return response
 
-
+@login_required
 def edit_recipe(request):
     if request.method == 'POST':
 
@@ -87,6 +90,44 @@ def edit_recipe(request):
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
     return response
 
+@login_required
+def new_recipe(request, user_name_slug):
+    if request.method == 'POST':
+
+        user = get_user_by_user_name_slug(user_name_slug)
+
+        print(request.POST)
+
+        edit_recipe_form = EditRecipeForm(request.POST)
+
+        if edit_recipe_form.is_valid():
+            creator = user
+
+            recipe = Recipe()
+
+            recipe.creator = creator
+            recipe.name = request.POST["name"]
+            recipe.text = request.POST["text"]
+            recipe.views = 0
+            recipe.ingredients = request.POST["ingredients"]
+            recipe.no_of_ratings = 0      
+            # TODO: TAGS      
+
+            recipe.save()
+        else:
+            print(edit_recipe_form.errors)
+
+    else:
+        edit_recipe_form = EditRecipeForm()
+
+    context_dict = {
+        "edit_recipe_form": edit_recipe_form,
+        "tags": Tag.objects.all()
+    }
+
+    response = render(request, 'recipes/new_recipe.html', context=context_dict)
+    return response
+
 def show_recipe(request, recipe_name_slug):
     # TODO: handle non-existent recipe name slugs
     recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
@@ -108,6 +149,7 @@ def about(request):
 
 
 def profile(request, user_name_slug):
+    user_name_slug = slugify(user_name_slug)
     user = get_user_by_user_name_slug(user_name_slug)
 
     recipes = Recipe.objects.filter(creator=user)
@@ -117,6 +159,21 @@ def profile(request, user_name_slug):
         "recipes": recipes
     }
 
-
     response = render(request, "recipes/profile.html", context=context_dict)
+    return response
+
+def favourites(request, user_name_slug):
+    # technically user.username could be passed in over a proper slug so we double slug just in case
+    user_name_slug = slugify(user_name_slug)
+    user = get_user_by_user_name_slug(user_name_slug)
+
+    saved_recipes = Recipe.objects.filter(saved_by=user)
+
+    context_dict = {
+        "user" : user,
+        "saved_recipes": saved_recipes
+    }
+
+
+    response = render(request, "recipes/favourites.html", context=context_dict)
     return response

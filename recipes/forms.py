@@ -36,7 +36,7 @@ class EditRecipeForm(forms.ModelForm):
     african = forms.CheckboxInput()
     american = forms.CheckboxInput()
     other = forms.CheckboxInput()
-   
+    
     class Meta:
         model = Recipe
         fields = [
