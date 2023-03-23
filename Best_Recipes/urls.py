@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout', views.user_logout, name="logout"),
     path('sign_up', views.sign_up, name='sign_up'),
     path('about', views.about, name='about'),
+    path('users/<slug:user_name_slug>/recipes/new_recipe', views.new_recipe, name='new_recipe'),
     path('edit_recipe', views.edit_recipe, name='edit_recipe'),
     path('users/<slug:user_name_slug>/',
         views.profile, name='profile'),
