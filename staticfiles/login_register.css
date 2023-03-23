@@ -1,0 +1,12 @@
+body{
+    background-image: url("login_background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.login{
+    font-size: 30px;
+    width: 500px;
+    border-radius: 8px;
+}

@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Favourites</title>
+    <link rel="stylesheet" href="../../static/login_register.css">
+</head>
+<body>
+<div>
+    <div>
+        Welcome to your favourites {{ user.user.username }}
+    </div>
+    <div>
+        {% if saved_recipes %}   
+            {% for recipe in saved_recipes %}
+                <a href="/recipes/{{ recipe.recipe_name_slug }}">{{ recipe.name }}</a>
+            {% endfor %}
+        {% else %}
+            <p>You have no favourites at the moment!</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

@@ -17,12 +17,24 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from recipes import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('login', views.login, name='login'),
+    path('login', views.user_login, name='login'),
+    path('logout', views.user_logout, name="logout"),
     path('sign_up', views.sign_up, name='sign_up'),
     path('about', views.about, name='about'),
+    path('users/<slug:user_name_slug>/recipes/new_recipe', views.new_recipe, name='new_recipe'),
+    path('edit_recipe', views.edit_recipe, name='edit_recipe'),
+    path('users/<slug:user_name_slug>/',
+        views.profile, name='profile'),
+    path('users/<slug:user_name_slug>/favourites',
+        views.favourites, name='favourites'),
+    path('recipes/<slug:recipe_name_slug>/',
+        views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

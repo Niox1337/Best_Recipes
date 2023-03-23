@@ -25,7 +25,7 @@ class SignUpTest(TestCase):
             "profile_picture":"testProfilePicture",
             "user_name":"testUserName",
             }
-    self.user=add_user_profile(info_dict)
+        
 
 
     def test_if_sign_up_adds_user(self):
