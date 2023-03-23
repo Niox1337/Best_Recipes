@@ -67,7 +67,12 @@ def sign_up(request):
     return response
 
 @login_required
-def edit_recipe(request):
+def edit_recipe(request, recipe_name_slug):
+    
+    if (request.method == "GET"):
+        recipe = Recipe.objects.get_or_create(recipe_name_slug=recipe_name_slug)[0]
+        recipe_creator = recipe.creator.user_name_slug
+
     if request.method == 'POST':
 
         print(request.POST)
@@ -84,10 +89,36 @@ def edit_recipe(request):
 
     context_dict = {
         "edit_recipe_form": edit_recipe_form,
-        "tags": Tag.objects.all()
+        "tags": Tag.objects.all(),
+        "recipe_creator": recipe_creator,
     }
 
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
+    return response
+
+@login_required
+def delete_recipe(request, recipe_name_slug):
+    recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+
+    context_dict = {
+        "recipe" : recipe,
+    }
+
+    response = render(request, "recipes/delete_recipe.html", context=context_dict)
+    return response
+
+@login_required
+def true_delete_recipe(request, recipe_name_slug):
+    recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+    recipe_name = recipe.name
+
+    recipe.delete()
+
+    context_dict = {
+        "recipe_name" : recipe_name,
+    }
+
+    return render(request, 'recipes/index.html')
     return response
 
 @login_required
@@ -196,7 +227,6 @@ def show_recipe(request, recipe_name_slug):
 def about(request):
     response = render(request, 'recipes/about.html')
     return response
-
 
 def profile(request, user_name_slug):
     user_name_slug = slugify(user_name_slug)
