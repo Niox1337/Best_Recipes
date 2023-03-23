@@ -1,19 +1,12 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="login_register.css">
-    <style>
-        body{
-            background-image: url("/static/login_background.jpg");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'login_register.css' %}" />
 </head>
-<body>
+<body id="body">
 <h1>Sign Up</h1>
 {% if registered %}
 You have successfully signed up!
