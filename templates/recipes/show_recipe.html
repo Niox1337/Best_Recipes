@@ -20,10 +20,13 @@
 
     <h3>Tags</h3>
 
-    {% if tags %}
-        {% for tag in tags %}
-            <p>{{ tag }}</p>
+    {% if tag_metas %}
+        {% for tag_meta in tag_metas %}
+            <a href="{% url 'show_tag' tag_meta.tag_name_slug %}">{{ tag_meta.tag }}</a>
+            <br/>
         {% endfor %}
+    {% else %} 
+        <p>Recipe has no tags at the moment</p>
     {% endif %}
     
     <p><strong>Views:</strong> {{ recipe.views }}</p>
