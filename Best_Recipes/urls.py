@@ -31,6 +31,8 @@ urlpatterns = [
     path('edit_recipe', views.edit_recipe, name='edit_recipe'),
     path('users/<slug:user_name_slug>/',
         views.profile, name='profile'),
+    path('users/<slug:user_name_slug>/favourites',
+        views.favourites, name='favourites'),
     path('recipes/<slug:recipe_name_slug>/',
         views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),

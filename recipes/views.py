@@ -111,6 +111,7 @@ def about(request):
 
 
 def profile(request, user_name_slug):
+    user_name_slug = slugify(user_name_slug)
     user = get_user_by_user_name_slug(user_name_slug)
 
     recipes = Recipe.objects.filter(creator=user)
@@ -120,6 +121,21 @@ def profile(request, user_name_slug):
         "recipes": recipes
     }
 
-
     response = render(request, "recipes/profile.html", context=context_dict)
+    return response
+
+def favourites(request, user_name_slug):
+    # technically user.username could be passed in over a proper slug so we double slug just in case
+    user_name_slug = slugify(user_name_slug)
+    user = get_user_by_user_name_slug(user_name_slug)
+
+    saved_recipes = Recipe.objects.filter(saved_by=user)
+
+    context_dict = {
+        "user" : user,
+        "saved_recipes": saved_recipes
+    }
+
+
+    response = render(request, "recipes/favourites.html", context=context_dict)
     return response
