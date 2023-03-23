@@ -16,13 +16,18 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
+    picture = forms.ImageField(label="Profile Picture")
+
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'date_of_birth', 'user_description', 'profile_picture')
+        fields = ('first_name', 'last_name', 'date_of_birth', 'user_description', 'picture',)
 
 
 class LoginForm(forms.ModelForm):
-    pass
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+
 
 class EditRecipeForm(forms.ModelForm):
     name = forms.CharField(max_length=Recipe.NAME_LEN,
@@ -36,7 +41,7 @@ class EditRecipeForm(forms.ModelForm):
     african = forms.CheckboxInput()
     american = forms.CheckboxInput()
     other = forms.CheckboxInput()
-    
+
     class Meta:
         model = Recipe
         fields = [

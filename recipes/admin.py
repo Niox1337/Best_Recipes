@@ -5,4 +5,10 @@ admin.site.register(UserProfile)
 admin.site.register(Tag)
 admin.site.register(Review)
 admin.site.register(Rating)
-admin.site.register(Recipe)
+
+
+class RecipeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'recipe_name_slug': ('name',)}
+
+
+admin.site.register(Recipe, RecipeAdmin)
