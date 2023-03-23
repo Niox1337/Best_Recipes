@@ -135,7 +135,6 @@ def new_recipe(request, user_name_slug):
 
 def show_tag(request, tag_name_slug):
 
-    # TODO: consder making recipes None by default and making list when tag found so we can do {% if recipes %} later on
     recipes = []
     tag_found = False
     found_tag = None
