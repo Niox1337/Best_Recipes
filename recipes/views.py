@@ -162,18 +162,25 @@ def show_recipe(request, recipe_name_slug):
     # TODO: handle non-existent recipe name slugs
     recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
 
-    tags = []
-    tag_slugs = []
+    class TagMeta:
+        def __init__(self, tag, tag_name_slug):
+            self.tag = tag
+            self.tag_name_slug = tag_name_slug
+
+    tag_metas = []
 
     for tag in Tag.objects.all():
         recipes_in_tag = tag.recipe.all()
         if recipe in recipes_in_tag:
-            tags.append(tag.tag)
-            tag_slugs.append(slugify(tag.tag))
+            tag_meta = TagMeta(tag.tag, slugify(tag.tag))
+            tag_metas.append(tag_meta)
+
+    if (len(tag_metas)) == 0:
+        tag_metas = None
 
     context_dict = {
         "recipe" : recipe,
-        "tags" : tags,
+        "tag_metas" : tag_metas,
     }
 
     # TODO: updates on every refresh - not ideal but not the biggest problem in the world either
