@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 {% load staticfiles %}
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -20,48 +20,7 @@
 
     <meta charset="UTF-8">
     <title>Best Recipes</title>
-    <link rel="stylesheet" href="index_style.css">
-    <style>
-        body{
-            background-image: url("/static/index_background.jpg");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-
-        .recipe-block{
-            display: flex;
-            flex-direction: row;
-            background-color: aliceblue;
-            opacity: 0.2
-        }
-
-        .search-box{
-            margin: 0 0 0 40px;
-            padding: 0 4px;
-            flex: 1;
-            flex-basis: 9px;
-        }
-
-        #user_profile_icon {
-            width: 50px;
-            height: 50px;
-        }
-
-        #search-box-container{
-            margin-bottom: 16px;
-            position: relative;
-            height: 56px;
-            width: 550px;
-        }
-        #input{
-            margin-bottom: 10px;
-            position: relative;
-            height: 50px;
-            width: 500px;
-            border-radius: 50px;
-}
-    </style>
+    <link rel="stylesheet" href="{% static 'index_style.css' %}">
 </head>
 <body>
 

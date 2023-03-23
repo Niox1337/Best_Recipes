@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tag.tag }} Recipes</title>
+</head>
+<body>
+<div>
+
+    <h3>{{ tag.tag }} </h3>
+
+    {% for recipe in recipes %}
+        <a href ="{% url 'show_recipe' recipe.recipe_name_slug %}">{{ recipe.name }}</a>
+        <br/>
+    {% endfor %}
+
+</div>
+</body>
+</html>

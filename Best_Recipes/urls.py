@@ -30,6 +30,7 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('users/<slug:user_name_slug>/recipes/new_recipe', views.new_recipe, name='new_recipe'),
     path('edit_recipe', views.edit_recipe, name='edit_recipe'),
+    path('tags/<slug:tag_name_slug>', views.show_tag, name='show_tag'),
     path('users/<slug:user_name_slug>/',
         views.profile, name='profile'),
     path('users/<slug:user_name_slug>/favourites',
@@ -37,4 +38,4 @@ urlpatterns = [
     path('recipes/<slug:recipe_name_slug>/',
         views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
