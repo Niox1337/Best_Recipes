@@ -10,14 +10,14 @@ class UserProfile(models.Model):
     LAST_NAME_LEN = 50
     USER_DESCRIPTION_LEN = 200
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     # TODO: do we need a minimum length for user_name, password, etc?
     first_name = models.CharField(max_length=FIRST_NAME_LEN, blank=True)
     last_name = models.CharField(max_length=LAST_NAME_LEN, blank=True)
     date_of_birth = models.DateField(default=django.utils.timezone.now, blank=True)
     # TODO: look at how rango handled user passwords etc.
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    profile_picture = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     user_name_slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):

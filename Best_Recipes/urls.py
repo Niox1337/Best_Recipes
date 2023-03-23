@@ -38,4 +38,7 @@ urlpatterns = [
     path('recipes/<slug:recipe_name_slug>/',
         views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
