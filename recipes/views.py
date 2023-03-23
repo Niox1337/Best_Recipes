@@ -150,6 +150,9 @@ def show_tag(request, tag_name_slug):
     if not tag_found:
         raise Exception("Tag " + tag_name_slug + " not found")
     
+    if (len(recipes) == 0):
+        recipes = None
+
     context_dict = {
         "tag": found_tag,
         "recipes" : recipes
