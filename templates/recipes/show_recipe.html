@@ -20,7 +20,11 @@
 
     <h3>Tags</h3>
 
-    PUT THE TAGS HERE
+    {% if tags %}
+        {% for tag in tags %}
+            <p>{{ tag }}</p>
+        {% endfor %}
+    {% endif %}
     
     <p><strong>Views:</strong> {{ recipe.views }}</p>
 

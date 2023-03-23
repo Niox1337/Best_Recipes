@@ -111,9 +111,14 @@ def new_recipe(request, user_name_slug):
             recipe.views = 0
             recipe.ingredients = request.POST["ingredients"]
             recipe.no_of_ratings = 0      
-            # TODO: TAGS      
-
             recipe.save()
+
+            for tag in Tag.objects.all():
+                lowered_name = tag.tag.lower()
+                if lowered_name in request.POST:
+                    tag.recipe.add(recipe)
+                tag.save()
+            
         else:
             print(edit_recipe_form.errors)
 
@@ -128,11 +133,47 @@ def new_recipe(request, user_name_slug):
     response = render(request, 'recipes/new_recipe.html', context=context_dict)
     return response
 
+def show_tag(request, tag_name_slug):
+
+    # TODO: consder making recipes None by default and making list when tag found so we can do {% if recipes %} later on
+    recipes = []
+    tag_found = False
+    found_tag = None
+
+    for tag in Tag.objects.all():
+        if tag_name_slug == slugify(tag.tag):
+            tag_found = True
+            found_tag = tag
+            recipes_in_tag = tag.recipe.all()
+            for recipe in recipes_in_tag:
+                recipes.append(recipe)
+    if not tag_found:
+        raise Exception("Tag " + tag_name_slug + " not found")
+    
+    context_dict = {
+        "tag": found_tag,
+        "recipes" : recipes
+    }
+
+    response = render(request, 'recipes/show_tag.html', context=context_dict)
+    return response
+
 def show_recipe(request, recipe_name_slug):
     # TODO: handle non-existent recipe name slugs
     recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+
+    tags = []
+    tag_slugs = []
+
+    for tag in Tag.objects.all():
+        recipes_in_tag = tag.recipe.all()
+        if recipe in recipes_in_tag:
+            tags.append(tag.tag)
+            tag_slugs.append(slugify(tag.tag))
+
     context_dict = {
-        "recipe" : recipe
+        "recipe" : recipe,
+        "tags" : tags,
     }
 
     # TODO: updates on every refresh - not ideal but not the biggest problem in the world either
