@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe -</title>
+</head>
+<body>
+<div>
+
+    {{ user.username }}
+    {{ recipe.creator.user.username }}
+
+    {% ifequal user.username recipe.creator.user.username %}
+    Are you sure you want to delete {{ recipe.name }}? This cannot be undone!
+    <br/>
+    <a href="{% url 'true_delete_recipe' recipe.recipe_name_slug %}">Yes</a>
+    <br/>
+    <a href="{% url 'show_recipe' recipe.recipe_name_slug %}">No</a>
+    {% else %}
+    You do not have permission to delete this recipe
+    {% endifequal %}
+
+</div>
+</body>
+</html>

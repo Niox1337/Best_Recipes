@@ -31,6 +31,12 @@
     
     <p><strong>Views:</strong> {{ recipe.views }}</p>
 
+    {% ifequal user.username recipe.creator.user.username %}
+    <a href="{% url 'edit_recipe' recipe.recipe_name_slug %}">Edit Recipe</a>
+    <br/>
+    <a href="{% url 'delete_recipe' recipe.recipe_name_slug %}">Delete Recipe</a>
+    {% endifequal %}
+
 </div>
 </body>
 </html>
