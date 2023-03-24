@@ -3,7 +3,56 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    padding: 0;
+    box-sizing: border-box;
+    margin:0;
     }
+
+a{
+    text-decoration: none;
+    color: darkblue;
+}
+
+header{
+    background-color: rgb(48,56,65);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-family: "Arial Black";
+    align-items: center;
+}
+
+.logo{
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.user_pic{
+    margin-left: 50px;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50px;
+}
+
+.user_menu{
+    margin-right: 72%;
+    float: right;
+}
+
+.user_menu li{
+    padding: 0 20px 0 0;
+}
+
+.user_menu li a{
+    transition: all 0.3s ease 0s;
+}
+
+.user_menu li a:hover{
+    color: white;
+}
 
 .recipe-block{
     display: flex;
@@ -20,13 +69,17 @@ body{
 }
 
 #search-box-container{
-    margin-bottom: 16px;
-    position: relative;
+    padding-top: 15%;
+    margin: auto;
+    text-align: center;
     height: 56px;
-    width: 550px;
+    width: 50%;
+
 }
 #input{
-    margin-bottom: 10px;
+    font-size: 20px;
+    padding-left: 20px;
+    margin: auto;
     position: relative;
     height: 50px;
     width: 500px;
