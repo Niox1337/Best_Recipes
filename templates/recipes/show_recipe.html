@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %}
+
 <!DOCTYPE html>
 {% load staticfiles %}
 
@@ -9,190 +9,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-    <script>
-
-$(document).ready(function(){
-
-// TODO: this really should be in a seperate JS file but annoying to do because relying on djano tags here so will do it later - might need to create hidden divs with everything *sigh*
-// TODO: we currenly dont unempty the first star - kinda minor aeshetic issue but still
-// TODO: we don't want users to be able to rate their own recipes
-
-function initalize_favourite_button() {
-    $.ajax({
-        type: 'GET',
-                url: "{% url 'get_favourited_status' %}",
-                data: {
-                    "recipe": "{{ recipe.recipe_name_slug }}",
-                    "user": "{{ user.username }}",
-                },
-                success: function (response) {
-                    favourited = response["favourited"]
-                    if (favourited == true) {
-                        console.log("setting unfav")
-                        $("#favourite_button_container").children("button").text("Unfavourite");
-                    }
-                    else {
-                        console.log("setting fav")
-                        $("#favourite_button_container").children("button").text("Favourite");
-                    }
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            })
-}
-
-function set_favourited_status(favourited) {
-    $.ajax({
-        type: 'GET',
-                url: "{% url 'set_favourited_status' %}",
-                data: {
-                    "recipe": "{{ recipe.recipe_name_slug }}",
-                    "user": "{{ user.username }}",
-                    "favourited": favourited,
-                },
-                success: function (response) {
-                    console.log(response)
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            })
-}
-
-function toggle_favourite_button() {
-    let favourited = $("#favourite_button_container").children("button").text();
-    if (favourited == "Favourite") {
-        set_favourited_status(true);
-        $("#favourite_button_container").children("button").text("Unfavourite");
-    }
-    else {
-        set_favourited_status(false);
-        $("#favourite_button_container").children("button").text("Favourite");
-    }
-}
-
-$("#favourite_button_container").children("button").click(
-    function() { toggle_favourite_button(); }
-)
-
-initalize_favourite_button();
-
-function update_recipe_rating_div(rating_data) {
-    let rating_text = "Rating: " + rating_data["rating"] + " (" + rating_data["no_of_ratings"] + " ratings so far)";
-    $("#rating_text").text(rating_text)
-  }
-
-  function get_recipe_rating_data() {
-    $.ajax({
-        type: 'GET',
-                url: "{% url 'get_recipe_rating' %}",
-                data: {
-                    "recipe": "{{ recipe.recipe_name_slug }}",
-                },
-                success: function (response) {
-                    let rating = response["rating"];
-                    let no_of_ratings = response["no_of_ratings"];
-                    console.log("Got rating " + rating + " and no of ratings " + no_of_ratings);
-                    update_recipe_rating_div(response);
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            })
-  }
-
-  get_recipe_rating_data()
-
-  function star_click(star_div_id) {
-    let star_number = star_div_id.charAt(star_div_id.length - 1);
-
-    $.ajax({
-                type: 'GET',
-                url: "{% url 'give_rating' %}",
-                data: {
-                    "rating": star_number,
-                    "user": "{{ user.username }}",
-                    "recipe": "{{ recipe.recipe_name_slug }}",
-                },
-                success: function (response) {
-                    console.log("it worked!!");
-                    get_recipe_rating_data()
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
-    
-    
-
-  }
-
-  function user_current_rating() {
-    console.log("LOADING!");
-    $.ajax({
-                type: 'GET',
-                url: "{% url 'get_rating' %}",
-                data: {
-                    "user": "{{ recipe.creator.user.username }}",
-                    "recipe": "{{ recipe.recipe_name_slug }}",
-                },
-                success: function (response) {
-                    let rating = parseInt(response["rating"])
-                    console.log("got rating of " + rating);
-                    if (rating > 0) {
-                        star_hover("star_" + rating);
-                    }
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            })
-
-  }
-  
-  user_current_rating();
-
-  function empty_star(star_div_id) {
-    $("#" + star_div_id).children("img").attr("src", "{% static 'star_empty.png' %}");
-  }
-
-  function fill_star(star_div_id) {
-    $("#" + star_div_id).children("img").attr("src", "{% static 'star_full.png' %}");
-  }
-
-  function star_hover(star_div_id) {
-    console.log(star_div_id)
-    let star_num = parseInt(star_div_id.charAt(star_div_id.length - 1))
-
-    for (let i = 1; i < 6; i++) {
-        if (i < star_num + 1) {
-            fill_star("star_" + i);
-            last_star_filled = i;
-        }
-        else {
-            empty_star("star_" + i);
-        }
-    }
-
-  }
-
-  $('.star').click(
-    function() {
-        star_click(this.id);
-    }
-  )
-
-  $('.star').hover(
-    function() {
-        star_hover(this.id);
-    }
-  )
-
-});
-
-
-    </script>
+    <script src="{% static 'JS/show_recipe.js' %}"></script>
 
 </head>
 <body>
@@ -257,6 +74,18 @@ function update_recipe_rating_div(rating_data) {
     <br/>
     <a href="{% url 'delete_recipe' recipe.recipe_name_slug %}">Delete Recipe</a>
     {% endifequal %}
+
+    <div id="for_jquery" >
+        <p id="empty_star_path">{% static 'star_empty.png' %}</p>
+        <p id="full_star_path">{% static 'star_full.png' %}</p>
+        <p id="recipe_name_slug">{{ recipe.recipe_name_slug }}</p>
+        <p id="username">{{ user.username }}</p>
+        <p id="get_favourited_status">{% url 'get_favourited_status' %}</p>
+        <p id="set_favourited_status">{% url 'set_favourited_status' %}</p>
+        <p id="give_rating">{% url 'give_rating' %}</p>
+        <p id="get_rating">{% url 'get_rating' %}</p>
+        <p id="get_recipe_rating">{% url 'get_recipe_rating' %}</p>
+    </div>
 
 </div>
 </body>
