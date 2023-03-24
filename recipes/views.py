@@ -59,11 +59,9 @@ def sign_up(request):
 
             profile.save()
             registered = True
-            """
             user = authenticate(username=request.POST.get("username"),
                                 password=request.POST.get("password"))
             login(request, user)
-            """
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -79,6 +77,7 @@ def sign_up(request):
     response = render(request, 'user/sign_up.html', context=context_dict)
     return response
 
+
 def give_rating(request):
     # TODO: broken? gives double ratings
     if request.is_ajax and request.method == "GET":
@@ -88,13 +87,14 @@ def give_rating(request):
 
         creator = get_user_by_user_name_slug(slugify(user))
         reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
-        
+
         rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
         print(rating)
         rating.rating = int(given_rating)
         rating.save()
 
-    return JsonResponse({}, status = 200)
+    return JsonResponse({}, status=200)
+
 
 def get_rating(request):
     if request.is_ajax and request.method == "GET":
@@ -103,10 +103,11 @@ def get_rating(request):
 
         creator = get_user_by_user_name_slug(slugify(user))
         reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
-        
+
         rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
 
-    return JsonResponse({"rating": rating.rating}, status = 200)
+    return JsonResponse({"rating": rating.rating}, status=200)
+
 
 def get_recipe_rating(request):
     if request.is_ajax and request.method == "GET":
@@ -129,7 +130,7 @@ def edit_recipe(request, recipe_name_slug):
         if recipe.recipe_name_slug == recipe_name_slug:
             found_recipe = recipe
             recipe_found = True
-    
+
     if not recipe_found:
         raise Exception("Recipe with recipe name slug " + recipe_name_slug + " not found")
 
@@ -137,7 +138,7 @@ def edit_recipe(request, recipe_name_slug):
 
     if request.method == 'POST':
 
-        #found_recipe.delete()
+        # found_recipe.delete()
 
         print(request.POST)
 
@@ -378,4 +379,25 @@ def search(request):
         response = render(request, 'recipes/search.html', {'searched': searched, 'recipes': recipes, })
     else:
         response = render(request, 'recipes/search.html', {})
+    return response
+
+
+def update_profile(request):
+    user = User.objects.get(id=request.user.id)
+    profile = request.user.profile
+    if request.user.is_authenticated:
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, request.FILES or None, instance=user)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            login(request, user)
+            return redirect(reverse("recipes:index"))
+    else:
+        return redirect(reverse("recipes:index"))
+    context_dict = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    }
+    response = render(request, 'user/update_profile.html',context=context_dict )
     return response
