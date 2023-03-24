@@ -1,11 +1,10 @@
 {% extends 'recipes/base.html' %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% block head_block %}
     <title>Edit Recipe</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body_block %}
 <div>
 
     {% ifequal user.username recipe_creator %}
@@ -30,5 +29,4 @@
     {% endifequal %}
 
 </div>
-</body>
-</html>
+{% endblock %}

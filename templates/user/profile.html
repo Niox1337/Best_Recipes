@@ -1,11 +1,11 @@
 {% extends 'user/profile_base.html' %}
 {% load staticfiles %}
 <!DOCTYPE html>
-{% block head_block %}
+{% block profile_head_block %}
     <title>{{ user.user.username }}</title>
 {% endblock %}
 
-{% block body_block %}
+{% block profile_body_block %}
 
     <div>
         <a href="{% url 'update_profile' %}">

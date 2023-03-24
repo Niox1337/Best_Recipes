@@ -3,11 +3,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'CSS/index_style.css' %}">
     <link rel="stylesheet" href="{% static 'CSS/profile.css' %}" />
-    {% block head_block %}
+    {% block profile_head_block %}
     {% endblock %}
 </head>
 <body>
+
+    <header>
+        <a href="{% url 'recipes:index' %}"> <img src="{% static 'images/logo.png'%}" class="logo"></a>
+    </header>
+
 <div id="pic-container">
     {% if user.profile.profile_picture %}
 
@@ -23,7 +29,7 @@
 <h2 id="welcome"> Welcome to your profile {{ user.user.username }} </h2>>
     <div class="container">
     <div class="profile_content">
-    {% block body_block %}
+    {% block profile_body_block %}
     {% endblock %}
     </div>
     </div>>
