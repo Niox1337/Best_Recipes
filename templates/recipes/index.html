@@ -22,8 +22,7 @@
     <div id="search-box-container">
         <form method="post", action="{% url 'search' %}">
             {% csrf_token %}
-            <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES"
-                   aria-label="Search" name="searched">
+            <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES" name="searched">
         </form>
     </div>
     <div>
@@ -32,25 +31,5 @@
         </div>
     </div>
     <div>
-
-    <div id="user_profile_box">
-        <div id="user_profile_box_links">
-            {% if user.is_authenticated %}
-                {% if user.profile.profile_picture %}
-                    <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}" alt="Profile Picture">
-                {% else %}
-                    <img src="{% static 'user_profile_icon.png' %}">
-                {% endif %}
-                <a href="{% url 'profile' user.username %}">Your Profile</a>
-                <a href="{% url 'new_recipe' user.username %}">New Recipe</a>
-                <a href="{% url 'favourites' user.username %}">Favourites</a>
-                <a href="{% url 'logout' %}">Logout</a>
-            {% else %} 
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'sign_up' %}">Sign Up</a>
-            {% endif %}
-        </div>
-    </div>
-    
     </div>
 {% endblock %}

@@ -30,7 +30,7 @@ def user_login(request):
         else:
             return HttpResponse("Invalid username or password")
     else:
-        return render(request, 'recipes/../templates/user/login.html')
+        return render(request, 'user/login.html')
 
 
 def user_logout(request):
@@ -75,7 +75,7 @@ def sign_up(request):
         "registered": registered
     }
 
-    response = render(request, 'recipes/../templates/user/sign_up.html', context=context_dict)
+    response = render(request, 'user/sign_up.html', context=context_dict)
     return response
 
 def give_rating(request):
@@ -302,7 +302,7 @@ def profile(request, user_name_slug):
         "recipes": recipes
     }
 
-    response = render(request, "recipes/../templates/user/profile.html", context=context_dict)
+    response = render(request, "user/profile.html", context=context_dict)
     return response
 
 
@@ -318,7 +318,7 @@ def favourites(request, user_name_slug):
         "saved_recipes": saved_recipes
     }
 
-    response = render(request, "recipes/../templates/user/favourites.html", context=context_dict)
+    response = render(request, "user/favourites.html", context=context_dict)
     return response
 
 
