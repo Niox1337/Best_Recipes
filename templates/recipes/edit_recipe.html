@@ -6,14 +6,10 @@
 </head>
 <body>
 <div>
-<<<<<<< HEAD
 
     {% ifequal user.username recipe_creator %}
 
     <form id="edit_recipe_form" method="post" action="{% url 'edit_recipe' user.username %}"
-=======
-    <form id="edit_recipe_form" method="post" action="{% url 'edit_recipe' %}"
->>>>>>> Zebedee
     enctype="multipart/form-data">
 
         {% csrf_token %}
@@ -27,15 +23,10 @@
 
         <input type="submit" name="submit" value="Submit Recipe" />
 
-<<<<<<< HEAD
     </form>
     {% else %}
     You do not have permission to edit this recipe
     {% endifequal %}
-=======
-</form>
-
->>>>>>> Zebedee
 
 </div>
 </body>

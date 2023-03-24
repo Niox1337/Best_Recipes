@@ -31,23 +31,16 @@ def user_login(request):
     else:
         return render(request, 'recipes/login.html')
 
-<<<<<<< HEAD
 
 def user_logout(request):
     logout(request)
     return render(request, 'recipes/index.html')
 
-=======
-def user_logout(request):
-    logout(request)
-    return render(request, 'recipes/index.html')
->>>>>>> Zebedee
 
 def sign_up(request):
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-<<<<<<< HEAD
         profile_form = UserProfileForm(request.POST, request.FILES or None)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -69,20 +62,6 @@ def sign_up(request):
                                 password=request.POST.get("password"))
             login(request, user)
             """
-=======
-        profile_form = UserProfileForm(request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            if 'picture' in request.FILES:
-                profile.profile_picture = request.FILES['picture']
-            profile.save()
-            registered = True
->>>>>>> Zebedee
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -98,7 +77,6 @@ def sign_up(request):
     response = render(request, 'recipes/sign_up.html', context=context_dict)
     return response
 
-<<<<<<< HEAD
 
 @login_required
 def edit_recipe(request, recipe_name_slug):
@@ -107,10 +85,6 @@ def edit_recipe(request, recipe_name_slug):
         recipe = Recipe.objects.get_or_create(recipe_name_slug=recipe_name_slug)[0]
         recipe_creator = recipe.creator.user_name_slug
 
-=======
-@login_required
-def edit_recipe(request):
->>>>>>> Zebedee
     if request.method == 'POST':
 
         print(request.POST)
@@ -127,18 +101,13 @@ def edit_recipe(request):
 
     context_dict = {
         "edit_recipe_form": edit_recipe_form,
-<<<<<<< HEAD
         "tags": Tag.objects.all(),
         "recipe_creator": recipe_creator,
-=======
-        "tags": Tag.objects.all()
->>>>>>> Zebedee
     }
 
     response = render(request, 'recipes/edit_recipe.html', context=context_dict)
     return response
 
-<<<<<<< HEAD
 
 @login_required
 def delete_recipe(request, recipe_name_slug):
@@ -165,8 +134,6 @@ def true_delete_recipe(request, recipe_name_slug):
     return render(request, 'recipes/index.html')
     return response
 
-=======
->>>>>>> Zebedee
 @login_required
 def new_recipe(request, user_name_slug):
     if request.method == 'POST':
@@ -187,7 +154,6 @@ def new_recipe(request, user_name_slug):
             recipe.text = request.POST["text"]
             recipe.views = 0
             recipe.ingredients = request.POST["ingredients"]
-<<<<<<< HEAD
             recipe.no_of_ratings = 0
             recipe.save()
 
@@ -197,12 +163,6 @@ def new_recipe(request, user_name_slug):
                     tag.recipe.add(recipe)
                 tag.save()
 
-=======
-            recipe.no_of_ratings = 0      
-            # TODO: TAGS      
-
-            recipe.save()
->>>>>>> Zebedee
         else:
             print(edit_recipe_form.errors)
 
@@ -217,7 +177,6 @@ def new_recipe(request, user_name_slug):
     response = render(request, 'recipes/new_recipe.html', context=context_dict)
     return response
 
-<<<<<<< HEAD
 
 
 def show_tag(request, tag_name_slug):
@@ -271,13 +230,6 @@ def show_recipe(request, recipe_name_slug):
     context_dict = {
         "recipe": recipe,
         "tag_metas": tag_metas,
-=======
-def show_recipe(request, recipe_name_slug):
-    # TODO: handle non-existent recipe name slugs
-    recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
-    context_dict = {
-        "recipe" : recipe
->>>>>>> Zebedee
     }
 
     # TODO: updates on every refresh - not ideal but not the biggest problem in the world either
@@ -292,10 +244,6 @@ def about(request):
     response = render(request, 'recipes/about.html')
     return response
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Zebedee
 def profile(request, user_name_slug):
     user_name_slug = slugify(user_name_slug)
     user = get_user_by_user_name_slug(user_name_slug)
@@ -303,21 +251,14 @@ def profile(request, user_name_slug):
     recipes = Recipe.objects.filter(creator=user)
 
     context_dict = {
-<<<<<<< HEAD
         "user": user,
-=======
-        "user" : user,
->>>>>>> Zebedee
         "recipes": recipes
     }
 
     response = render(request, "recipes/profile.html", context=context_dict)
     return response
 
-<<<<<<< HEAD
 
-=======
->>>>>>> Zebedee
 def favourites(request, user_name_slug):
     # technically user.username could be passed in over a proper slug so we double slug just in case
     user_name_slug = slugify(user_name_slug)
@@ -326,19 +267,9 @@ def favourites(request, user_name_slug):
     saved_recipes = Recipe.objects.filter(saved_by=user)
 
     context_dict = {
-<<<<<<< HEAD
         "user": user,
         "saved_recipes": saved_recipes
     }
 
     response = render(request, "recipes/favourites.html", context=context_dict)
     return response
-=======
-        "user" : user,
-        "saved_recipes": saved_recipes
-    }
-
-
-    response = render(request, "recipes/favourites.html", context=context_dict)
-    return response
->>>>>>> Zebedee

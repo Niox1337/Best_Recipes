@@ -16,17 +16,11 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-<<<<<<< HEAD
     picture = forms.ImageField(label="Profile Picture")
 
     class Meta:
         model = UserProfile
         fields = ('first_name', 'last_name', 'date_of_birth', 'user_description', 'picture',)
-=======
-    class Meta:
-        model = UserProfile
-        fields = ('first_name', 'last_name', 'date_of_birth', 'user_description', 'profile_picture')
->>>>>>> Zebedee
 
 
 class LoginForm(forms.ModelForm):
@@ -34,10 +28,7 @@ class LoginForm(forms.ModelForm):
         model = User
         fields = ('username', 'password')
 
-<<<<<<< HEAD
 
-=======
->>>>>>> Zebedee
 class EditRecipeForm(forms.ModelForm):
     name = forms.CharField(max_length=Recipe.NAME_LEN,
                            help_text="Recipe Name")
@@ -50,11 +41,7 @@ class EditRecipeForm(forms.ModelForm):
     african = forms.CheckboxInput()
     american = forms.CheckboxInput()
     other = forms.CheckboxInput()
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Zebedee
     class Meta:
         model = Recipe
         fields = [

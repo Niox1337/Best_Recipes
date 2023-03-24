@@ -1,9 +1,5 @@
 body{
-<<<<<<<< HEAD:static/CSS/index_style.css
     background-image: url("../images/index_background.jpg");
-========
-    background-image: url("index_background.jpg");
->>>>>>>> Zebedee:static/index_style.css
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

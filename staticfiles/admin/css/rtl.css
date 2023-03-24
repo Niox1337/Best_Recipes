@@ -4,30 +4,18 @@ body {
 
 /* LOGIN */
 
-<<<<<<< HEAD
 .input .form-row {
     float: right;
 }
 
 .input .form-row label {
-=======
-.login .form-row {
-    float: right;
-}
-
-.login .form-row label {
->>>>>>> Zebedee
     float: right;
     padding-left: 0.5em;
     padding-right: 0;
     text-align: left;
 }
 
-<<<<<<< HEAD
 .input .submit-row {
-=======
-.login .submit-row {
->>>>>>> Zebedee
     clear: both;
     padding: 1em 9.4em 0 0;
 }
