@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    {% block title %}
+    {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'CSS/login_register.css' %}" />
+</head>
+<body>
+<div class="central_container">
+    <div class="header">
+        {% block header %}
+        {% endblock %}
+    </div>
+
+    <div class="input">
+        {% block forms %}
+        {% endblock %}
+    </div>
+    <div class="extra">
+        {% block extra %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

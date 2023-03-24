@@ -1,35 +1,27 @@
+{% extends 'recipes/login_signup_base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'login_register.css' %}" />
-</head>
-<body>
-<div>
-    <h1>Log In</h1>
-    <div>
+{% block title %}
+    Login
+{% endblock %}
+{% block header %}
+    Log In
+{% endblock %}
+{% block forms %}
         <form id="login_form" method="post" action="{% url 'login' %}">
             {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" class="login"/>
+            <input type="text" name="username" value="" size="50" class="input" placeholder="Username"/>
             <br />
-            Password: <input type="password" name="password" value="" size="50" class="login"/>
+            <input type="password" name="password" value="" size="50" class="input" placeholder="Password"/>
             <br />
-            <input type="submit" value="submit" />
+            <div class="button-holder">
+                <input type="submit" value="submit" class="button"/>
+            </div>
+
         </form>
-
-    </div>
-    <div>
-
+{% endblock %}
+{% block extra %}
         <p style="color: cornflowerblue">
             Don't have an account yet?
             <a href="{% url 'sign_up' %}">Join us now!</a>
         </p>
-
-    </div>
-    <div>
-    </div>
-</div>
-</body>
-</html>
+{% endblock %}
