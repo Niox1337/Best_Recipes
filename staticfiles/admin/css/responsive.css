@@ -413,11 +413,11 @@ input[type="submit"], button {
 
     /* Login */
 
-    .login #header {
+    .input #header {
         padding: 15px 20px;
     }
 
-    .login #branding h1 {
+    .input #branding h1 {
         margin: 0;
     }
 
@@ -845,49 +845,49 @@ input[type="submit"], button {
 
     /* Login */
 
-    body.login {
+    body.input {
         padding: 0 15px;
     }
 
-    .login #container {
+    .input #container {
         width: auto;
         max-width: 480px;
         margin: 50px auto;
     }
 
-    .login #header,
-    .login #content {
+    .input #header,
+    .input #content {
         padding: 15px;
     }
 
-    .login #content-main {
+    .input #content-main {
         float: none;
     }
 
-    .login .form-row {
+    .input .form-row {
         padding: 0;
     }
 
-    .login .form-row + .form-row {
+    .input .form-row + .form-row {
         margin-top: 15px;
     }
 
-    .login .form-row label {
+    .input .form-row label {
         display: block;
         margin: 0 0 5px;
         padding: 0;
         line-height: 1.2;
     }
 
-    .login .submit-row {
+    .input .submit-row {
         padding: 15px 0 0;
     }
 
-    .login br, .login .submit-row label {
+    .input br, .input .submit-row label {
         display: none;
     }
 
-    .login .submit-row input {
+    .input .submit-row input {
         margin: 0;
         text-transform: uppercase;
     }
