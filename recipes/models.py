@@ -76,7 +76,7 @@ class Review(models.Model):
     review_rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.creator.user_name + " review " + str(self.id)
+        return self.creator.user_name_slug + " review " + str(self.id)
 
 
 class Rating(models.Model):
@@ -85,11 +85,11 @@ class Rating(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True, blank=True)
     # True = recipe, False = review
     recipe_or_review = models.BooleanField(default=True)
-    # 5 star scale on 1-10 scale e.g 1 = 0.5 stars
+    # 5 star scale
     rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.creator.user_name + " rating " + str(self.id)
+        return self.creator.user_name_slug + " rating " + str(self.id)
 
 
 class Tag(models.Model):

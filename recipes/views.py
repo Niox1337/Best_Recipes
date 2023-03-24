@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -77,15 +78,54 @@ def sign_up(request):
     response = render(request, 'recipes/sign_up.html', context=context_dict)
     return response
 
+def give_rating(request):
+    if request.is_ajax and request.method == "GET":
+        given_rating = request.GET.get("rating", None)
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+
+        creator = get_user_by_user_name_slug(slugify(user))
+        reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        
+        rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
+        rating.rating = int(given_rating)
+        rating.save()
+
+    return JsonResponse({}, status = 200)
+
+def get_rating(request):
+    if request.is_ajax and request.method == "GET":
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+
+        creator = get_user_by_user_name_slug(slugify(user))
+        reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        
+        rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
+
+    return JsonResponse({"rating": rating.rating}, status = 200)
 
 @login_required
 def edit_recipe(request, recipe_name_slug):
     
-    if (request.method == "GET"):
-        recipe = Recipe.objects.get_or_create(recipe_name_slug=recipe_name_slug)[0]
-        recipe_creator = recipe.creator.user_name_slug
+    recipe_found = False
+    found_recipe = None
+
+    # because creator id is mandatory and we don't have it we need to do this
+    for recipe in Recipe.objects.all():
+        print("checking:" + recipe.recipe_name_slug)
+        if recipe.recipe_name_slug == recipe_name_slug:
+            found_recipe = recipe
+            recipe_found = True
+    
+    if not recipe_found:
+        raise Exception("Recipe with recipe name slug " + recipe_name_slug + " not found")
+
+    recipe_creator = recipe.creator.user_name_slug
 
     if request.method == 'POST':
+
+        #found_recipe.delete()
 
         print(request.POST)
 
@@ -97,7 +137,13 @@ def edit_recipe(request, recipe_name_slug):
             print(edit_recipe_form.errors)
 
     else:
-        edit_recipe_form = EditRecipeForm()
+        initial_values = {
+            "name": recipe.name,
+            "text": recipe.text,
+            "ingredients": recipe.ingredients,
+
+        }
+        edit_recipe_form = EditRecipeForm(initial={'text': "HI MAW", 'western': 'on'})
 
     context_dict = {
         "edit_recipe_form": edit_recipe_form,
