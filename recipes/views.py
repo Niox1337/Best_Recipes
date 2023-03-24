@@ -30,7 +30,7 @@ def user_login(request):
         else:
             return HttpResponse("Invalid username or password")
     else:
-        return render(request, 'recipes/../templates/user/login.html')
+        return render(request, 'user/login.html')
 
 
 def user_logout(request):
@@ -75,7 +75,7 @@ def sign_up(request):
         "registered": registered
     }
 
-    response = render(request, 'recipes/../templates/user/sign_up.html', context=context_dict)
+    response = render(request, 'user/sign_up.html', context=context_dict)
     return response
 
 def give_rating(request):
@@ -314,7 +314,7 @@ def profile(request, user_name_slug):
         "recipes": recipes
     }
 
-    response = render(request, "recipes/../templates/user/profile.html", context=context_dict)
+    response = render(request, "user/profile.html", context=context_dict)
     return response
 
 
@@ -330,9 +330,44 @@ def favourites(request, user_name_slug):
         "saved_recipes": saved_recipes
     }
 
-    response = render(request, "recipes/../templates/user/favourites.html", context=context_dict)
+    response = render(request, "user/favourites.html", context=context_dict)
     return response
 
+def get_favourited_status(request):
+    if request.is_ajax and request.method == "GET":
+
+        response = { "favourited": False }
+
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+
+        user = get_user_by_user_name_slug(slugify(user))
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        
+        if (user in recipe.saved_by.all()):
+            response["favourited"] = True
+
+    return JsonResponse(response, status = 200)
+
+def set_favourited_status(request):
+    if request.is_ajax and request.method == "GET":
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+        favourited = request.GET.get("favourited", None)
+
+        user = get_user_by_user_name_slug(slugify(user))
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+
+        if favourited == "true":
+            print("dsfd")
+            recipe.saved_by.add(user)
+        else:
+            print("rem")
+            recipe.saved_by.remove(user)
+
+        recipe.save()
+    
+    return JsonResponse({}, status = 200)
 
 def search(request):
     if request.method == "POST":
