@@ -1,13 +1,14 @@
+{% extends 'user/profile_base.html' %}
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% block profile_head_block %}
+
     <title>Your Favourites</title>
-    <link rel="stylesheet" href="../../static/CSS/login_register.css">
-</head>
-<body>
-<div>
+
+{% endblock %}
+
+{% block profile_body_block %}
+
     <div>
         Welcome to your favourites {{ user.user.username }}
     </div>
@@ -20,6 +21,5 @@
             <p>You have no favourites at the moment!</p>
         {% endif %}
     </div>
-</div>
-</body>
-</html>
+
+{% endblock %}

@@ -2,6 +2,10 @@
 {% load staticfiles %}
 
 {% block head_block %}
+{{ searched }}
+{% endblock %}
+
+{% block body_block %}
     {% if searched %}
         Here's the {{ searched }} for you!
         {% for recipe in recipes %}
@@ -14,8 +18,4 @@
     {% else %}
         No search result
     {% endif %}
-{% endblock %}
-
-{% block body_block %}
-
 {% endblock %}

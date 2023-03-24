@@ -7,23 +7,28 @@
     {% block title %}
     {% endblock %}
     </title>
+    <link rel="stylesheet" href="{% static 'CSS/index_style.css' %}">
     <link rel="stylesheet" href="{% static 'CSS/login_register.css' %}" />
 </head>
 <body>
-<div class="central_container">
-    <div class="header">
-        {% block header %}
-        {% endblock %}
-    </div>
+    <header>
+        <a href="{% url 'recipes:index' %}"> <img src="{% static 'images/logo.png'%}" class="logo"></a>
+    </header>
 
-    <div class="input">
-        {% block forms %}
-        {% endblock %}
+    <div class="central_container">
+        <div class="header">
+            {% block header %}
+            {% endblock %}
+        </div>
+
+        <div class="input">
+            {% block forms %}
+            {% endblock %}
+        </div>
+        <div class="extra">
+            {% block extra %}
+            {% endblock %}
+        </div>
     </div>
-    <div class="extra">
-        {% block extra %}
-        {% endblock %}
-    </div>
-</div>
 </body>
 </html>

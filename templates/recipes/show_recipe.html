@@ -1,20 +1,18 @@
-
+{% extends 'recipes/base.html' %}
 <!DOCTYPE html>
 {% load staticfiles %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% block head_block %}
     <title>Recipe -</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script src="{% static 'JS/show_recipe.js' %}"></script>
 
-</head>
-<body>
-<div>
+{% endblock %}
 
+{% block body_block %}
+<div>
     <h3>{{ recipe.name }} by {{ recipe.creator.user.username }} </h3>
     {{ recipe.recipe_name_slug }}
 
@@ -88,5 +86,4 @@
     </div>
 
 </div>
-</body>
-</html>
+{% endblock %}
