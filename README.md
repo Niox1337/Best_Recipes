@@ -8,6 +8,8 @@ Activate python 3.9 virtual enviroment. Go to project directory then perform
 
 ```consle
 pip install –r requirements.txt
+python manage.py migrate
+python population_script.py
 ```
 
 ## External Sources
