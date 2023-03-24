@@ -79,6 +79,7 @@ def sign_up(request):
 
 
 def give_rating(request):
+    # TODO: broken? gives double ratings
     if request.is_ajax and request.method == "GET":
         given_rating = request.GET.get("rating", None)
         user = request.GET.get("user", None)
@@ -88,6 +89,7 @@ def give_rating(request):
         reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
 
         rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
+        print(rating)
         rating.rating = int(given_rating)
         rating.save()
 
@@ -106,6 +108,16 @@ def get_rating(request):
 
     return JsonResponse({"rating": rating.rating}, status=200)
 
+
+def get_recipe_rating(request):
+    if request.is_ajax and request.method == "GET":
+        recipe_name_slug = request.GET.get("recipe", None)
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        total_rating = calcuate_recipe_rating(recipe)
+        # TODO: get_number_of_recipe_ratings gets wrong result? or get rating creates duplicates?
+        no_of_ratings = get_number_of_recipe_ratings(recipe)
+        
+    return JsonResponse({"rating": total_rating, "no_of_ratings": no_of_ratings}, status = 200)
 
 @login_required
 def edit_recipe(request, recipe_name_slug):
@@ -323,6 +335,41 @@ def favourites(request, user_name_slug):
     response = render(request, "user/favourites.html", context=context_dict)
     return response
 
+def get_favourited_status(request):
+    if request.is_ajax and request.method == "GET":
+
+        response = { "favourited": False }
+
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+
+        user = get_user_by_user_name_slug(slugify(user))
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        
+        if (user in recipe.saved_by.all()):
+            response["favourited"] = True
+
+    return JsonResponse(response, status = 200)
+
+def set_favourited_status(request):
+    if request.is_ajax and request.method == "GET":
+        user = request.GET.get("user", None)
+        recipe_name_slug = request.GET.get("recipe", None)
+        favourited = request.GET.get("favourited", None)
+
+        user = get_user_by_user_name_slug(slugify(user))
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+
+        if favourited == "true":
+            print("dsfd")
+            recipe.saved_by.add(user)
+        else:
+            print("rem")
+            recipe.saved_by.remove(user)
+
+        recipe.save()
+    
+    return JsonResponse({}, status = 200)
 
 def search(request):
     if request.method == "POST":
