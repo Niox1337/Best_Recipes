@@ -1,15 +1,24 @@
 /* LOGIN FORM */
 
+<<<<<<< HEAD
 body.input {
     background: #f8f8f8;
 }
 
 .input #header {
+=======
+body.login {
+    background: #f8f8f8;
+}
+
+.login #header {
+>>>>>>> Zebedee
     height: auto;
     padding: 15px 16px;
     justify-content: center;
 }
 
+<<<<<<< HEAD
 .input #header h1 {
     font-size: 18px;
 }
@@ -23,6 +32,21 @@ body.input {
 }
 
 .input #container {
+=======
+.login #header h1 {
+    font-size: 18px;
+}
+
+.login #header h1 a {
+    color: #fff;
+}
+
+.login #content {
+    padding: 20px 20px 0;
+}
+
+.login #container {
+>>>>>>> Zebedee
     background: #fff;
     border: 1px solid #eaeaea;
     border-radius: 4px;
@@ -32,18 +56,30 @@ body.input {
     margin: 100px auto;
 }
 
+<<<<<<< HEAD
 .input #content-main {
     width: 100%;
 }
 
 .input .form-row {
+=======
+.login #content-main {
+    width: 100%;
+}
+
+.login .form-row {
+>>>>>>> Zebedee
     padding: 4px 0;
     float: left;
     width: 100%;
     border-bottom: none;
 }
 
+<<<<<<< HEAD
 .input .form-row label {
+=======
+.login .form-row label {
+>>>>>>> Zebedee
     padding-right: 0.5em;
     line-height: 2em;
     font-size: 1em;
@@ -51,7 +87,11 @@ body.input {
     color: #333;
 }
 
+<<<<<<< HEAD
 .input .form-row #id_username, .input .form-row #id_password {
+=======
+.login .form-row #id_username, .login .form-row #id_password {
+>>>>>>> Zebedee
     clear: both;
     padding: 8px;
     width: 100%;
@@ -60,12 +100,20 @@ body.input {
             box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 .input span.help {
+=======
+.login span.help {
+>>>>>>> Zebedee
     font-size: 10px;
     display: block;
 }
 
+<<<<<<< HEAD
 .input .submit-row {
+=======
+.login .submit-row {
+>>>>>>> Zebedee
     clear: both;
     padding: 1em 0 0 9.4em;
     margin: 0;
@@ -74,6 +122,10 @@ body.input {
     text-align: left;
 }
 
+<<<<<<< HEAD
 .input .password-reset-link {
+=======
+.login .password-reset-link {
+>>>>>>> Zebedee
     text-align: center;
 }

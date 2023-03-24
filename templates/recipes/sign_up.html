@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'recipes/login_signup_base.html' %}
 {% load staticfiles %}
 
@@ -11,15 +12,38 @@ Sign Up
 
 {% block forms %}
 
+=======
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'login_register.css' %}" />
+</head>
+<body id="body">
+<h1>Sign Up</h1>
+>>>>>>> Zebedee
 {% if registered %}
 You have successfully signed up!
 <a href="{% url 'recipes:index' %}">Return to the homepage.</a><br />
 {% else %}
+<<<<<<< HEAD
+=======
+
+    <script src="https://apis.google.com/js/platform.js" async defer>
+
+    </script>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+<div>
+>>>>>>> Zebedee
     <form id= "user_form" method="post" action="{% url 'sign_up' %}"
     enctype="multipart/form-data">
 
         {% csrf_token %}
 
+<<<<<<< HEAD
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
 
@@ -30,3 +54,17 @@ You have successfully signed up!
 {% endif %}
 
 {% endblock %}
+=======
+        {{ user_form.as_ul }}
+        {{ profile_form.as_ul }}
+
+        <input type="submit" name="submit" value="Register" />
+    </form>
+</div>
+<div>
+        <meta name="google-signin-client_id" content="318064106161-j0pr3htfevifdqn951qospgu7p1qa0d4.apps.googleusercontent.com">
+</div>
+{% endif %}
+</body>
+</html>
+>>>>>>> Zebedee

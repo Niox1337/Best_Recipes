@@ -20,7 +20,11 @@
 
     <meta charset="UTF-8">
     <title>Best Recipes</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'CSS/index_style.css' %}">
+=======
+    <link rel="stylesheet" href="{% static 'index_style.css' %}">
+>>>>>>> Zebedee
 </head>
 <body>
 
@@ -35,6 +39,7 @@
     </div>
     <div>
 
+<<<<<<< HEAD
     <div id="user_profile_box">
         <div id="user_profile_box_links">
             {% if user.is_authenticated %}
@@ -50,6 +55,21 @@
             {% else %} 
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'sign_up' %}">Sign Up</a>
+=======
+
+    <div id="user_profile_box">
+        <img id="user_profile_icon" src="/static/user_profile_icon.png" onclick="toggleProfileBox()"/>
+
+        <div id="user_profile_box_links">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' user.username %}">Your Profile</a>
+            <a href="{% url 'new_recipe' user.username %}">New Recipe</a>
+            <a href="{% url 'favourites' user.username %}">Favourites</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% else %} 
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'sign_up' %}">Sign Up</a>
+>>>>>>> Zebedee
             {% endif %}
         </div>
     </div>

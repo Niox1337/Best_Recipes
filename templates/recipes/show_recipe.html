@@ -20,6 +20,7 @@
 
     <h3>Tags</h3>
 
+<<<<<<< HEAD
     {% if tag_metas %}
         {% for tag_meta in tag_metas %}
             <a href="{% url 'show_tag' tag_meta.tag_name_slug %}">{{ tag_meta.tag }}</a>
@@ -37,6 +38,12 @@
     <a href="{% url 'delete_recipe' recipe.recipe_name_slug %}">Delete Recipe</a>
     {% endifequal %}
 
+=======
+    PUT THE TAGS HERE
+    
+    <p><strong>Views:</strong> {{ recipe.views }}</p>
+
+>>>>>>> Zebedee
 </div>
 </body>
 </html>

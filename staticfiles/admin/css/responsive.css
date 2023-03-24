@@ -413,11 +413,19 @@ input[type="submit"], button {
 
     /* Login */
 
+<<<<<<< HEAD
     .input #header {
         padding: 15px 20px;
     }
 
     .input #branding h1 {
+=======
+    .login #header {
+        padding: 15px 20px;
+    }
+
+    .login #branding h1 {
+>>>>>>> Zebedee
         margin: 0;
     }
 
@@ -845,16 +853,25 @@ input[type="submit"], button {
 
     /* Login */
 
+<<<<<<< HEAD
     body.input {
         padding: 0 15px;
     }
 
     .input #container {
+=======
+    body.login {
+        padding: 0 15px;
+    }
+
+    .login #container {
+>>>>>>> Zebedee
         width: auto;
         max-width: 480px;
         margin: 50px auto;
     }
 
+<<<<<<< HEAD
     .input #header,
     .input #content {
         padding: 15px;
@@ -873,12 +890,33 @@ input[type="submit"], button {
     }
 
     .input .form-row label {
+=======
+    .login #header,
+    .login #content {
+        padding: 15px;
+    }
+
+    .login #content-main {
+        float: none;
+    }
+
+    .login .form-row {
+        padding: 0;
+    }
+
+    .login .form-row + .form-row {
+        margin-top: 15px;
+    }
+
+    .login .form-row label {
+>>>>>>> Zebedee
         display: block;
         margin: 0 0 5px;
         padding: 0;
         line-height: 1.2;
     }
 
+<<<<<<< HEAD
     .input .submit-row {
         padding: 15px 0 0;
     }
@@ -888,6 +926,17 @@ input[type="submit"], button {
     }
 
     .input .submit-row input {
+=======
+    .login .submit-row {
+        padding: 15px 0 0;
+    }
+
+    .login br, .login .submit-row label {
+        display: none;
+    }
+
+    .login .submit-row input {
+>>>>>>> Zebedee
         margin: 0;
         text-transform: uppercase;
     }

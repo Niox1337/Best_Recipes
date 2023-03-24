@@ -29,10 +29,14 @@ urlpatterns = [
     path('sign_up', views.sign_up, name='sign_up'),
     path('about', views.about, name='about'),
     path('users/<slug:user_name_slug>/recipes/new_recipe', views.new_recipe, name='new_recipe'),
+<<<<<<< HEAD
     path('recipes/<slug:recipe_name_slug>/edit_recipe', views.edit_recipe, name='edit_recipe'),
     path('recipes/<slug:recipe_name_slug>/delete', views.delete_recipe, name='delete_recipe'),
     path('recipes/<slug:recipe_name_slug>/delete/true_delete', views.true_delete_recipe, name='true_delete_recipe'),
     path('tags/<slug:tag_name_slug>', views.show_tag, name='show_tag'),
+=======
+    path('edit_recipe', views.edit_recipe, name='edit_recipe'),
+>>>>>>> Zebedee
     path('users/<slug:user_name_slug>/',
         views.profile, name='profile'),
     path('users/<slug:user_name_slug>/favourites',
@@ -40,7 +44,11 @@ urlpatterns = [
     path('recipes/<slug:recipe_name_slug>/',
         views.show_recipe, name='show_recipe'),
     path('recipes/', include('recipes.urls')),
+<<<<<<< HEAD
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+>>>>>>> Zebedee

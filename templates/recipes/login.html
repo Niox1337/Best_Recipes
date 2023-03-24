@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'recipes/login_signup_base.html' %}
 {% load staticfiles %}
 {% block title %}
@@ -20,8 +21,44 @@
         </form>
 {% endblock %}
 {% block extra %}
+=======
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'login_register.css' %}" />
+</head>
+<body>
+<div>
+    <h1>Log In</h1>
+    <div>
+        <form id="login_form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            Username: <input type="text" name="username" value="" size="50" class="login"/>
+            <br />
+            Password: <input type="password" name="password" value="" size="50" class="login"/>
+            <br />
+            <input type="submit" value="submit" />
+        </form>
+
+    </div>
+    <div>
+
+>>>>>>> Zebedee
         <p style="color: cornflowerblue">
             Don't have an account yet?
             <a href="{% url 'sign_up' %}">Join us now!</a>
         </p>
+<<<<<<< HEAD
 {% endblock %}
+=======
+
+    </div>
+    <div>
+    </div>
+</div>
+</body>
+</html>
+>>>>>>> Zebedee
