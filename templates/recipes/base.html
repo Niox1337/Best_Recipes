@@ -8,6 +8,32 @@
     {% endblock %}
 </head>
 <body>
+    <header>
+            {% if user.is_authenticated %}
+                {% if user.profile.profile_picture %}
+                    <a href="{% url 'profile' user.username %}">
+                    <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}"
+                         alt="Profile Picture" class="user_pic" />
+                    </a>
+                {% else %}
+                    <a href="{% url 'profile' user.username %}">
+                    <img src="{% static 'user_profile_icon.png' %}" class="user_pic" />
+                    </a>
+                {% endif %}
+                <ul class="user_menu">
+                    <li><a href="{% url 'profile' user.username %}">Your Profile</a></li>
+                    <li><a href="{% url 'new_recipe' user.username %}">New Recipe</a></li>
+                    <li><a href="{% url 'favourites' user.username %}">Favourites</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            {% else %}
+                <ul class="user_menu">
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'sign_up' %}">Sign Up</a></li>
+                </ul>
+                {% endif %}
+        <a href="{% url 'recipes:index' %}"> <img src="{% static 'images/logo.png'%}" class="logo"></a>
+    </header>
     {% block body_block %}
     {% endblock %}
 </body>
