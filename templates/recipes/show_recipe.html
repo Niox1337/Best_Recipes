@@ -17,6 +17,93 @@ $(document).ready(function(){
 // TODO: we currenly dont unempty the first star - kinda minor aeshetic issue but still
 // TODO: we don't want users to be able to rate their own recipes
 
+function initalize_favourite_button() {
+    $.ajax({
+        type: 'GET',
+                url: "{% url 'get_favourited_status' %}",
+                data: {
+                    "recipe": "{{ recipe.recipe_name_slug }}",
+                    "user": "{{ user.username }}",
+                },
+                success: function (response) {
+                    favourited = response["favourited"]
+                    if (favourited == true) {
+                        console.log("setting unfav")
+                        $("#favourite_button_container").children("button").text("Unfavourite");
+                    }
+                    else {
+                        console.log("setting fav")
+                        $("#favourite_button_container").children("button").text("Favourite");
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+}
+
+function set_favourited_status(favourited) {
+    $.ajax({
+        type: 'GET',
+                url: "{% url 'set_favourited_status' %}",
+                data: {
+                    "recipe": "{{ recipe.recipe_name_slug }}",
+                    "user": "{{ user.username }}",
+                    "favourited": favourited,
+                },
+                success: function (response) {
+                    console.log(response)
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+}
+
+function toggle_favourite_button() {
+    let favourited = $("#favourite_button_container").children("button").text();
+    if (favourited == "Favourite") {
+        set_favourited_status(true);
+        $("#favourite_button_container").children("button").text("Unfavourite");
+    }
+    else {
+        set_favourited_status(false);
+        $("#favourite_button_container").children("button").text("Favourite");
+    }
+}
+
+$("#favourite_button_container").children("button").click(
+    function() { toggle_favourite_button(); }
+)
+
+initalize_favourite_button();
+
+function update_recipe_rating_div(rating_data) {
+    let rating_text = "Rating: " + rating_data["rating"] + " (" + rating_data["no_of_ratings"] + " ratings so far)";
+    $("#rating_text").text(rating_text)
+  }
+
+  function get_recipe_rating_data() {
+    $.ajax({
+        type: 'GET',
+                url: "{% url 'get_recipe_rating' %}",
+                data: {
+                    "recipe": "{{ recipe.recipe_name_slug }}",
+                },
+                success: function (response) {
+                    let rating = response["rating"];
+                    let no_of_ratings = response["no_of_ratings"];
+                    console.log("Got rating " + rating + " and no of ratings " + no_of_ratings);
+                    update_recipe_rating_div(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+  }
+
+  get_recipe_rating_data()
+
   function star_click(star_div_id) {
     let star_number = star_div_id.charAt(star_div_id.length - 1);
 
@@ -25,16 +112,19 @@ $(document).ready(function(){
                 url: "{% url 'give_rating' %}",
                 data: {
                     "rating": star_number,
-                    "user": "{{ recipe.creator.user.username }}",
+                    "user": "{{ user.username }}",
                     "recipe": "{{ recipe.recipe_name_slug }}",
                 },
                 success: function (response) {
                     console.log("it worked!!");
+                    get_recipe_rating_data()
                 },
                 error: function (response) {
                     console.log(response)
                 }
             })
+    
+    
 
   }
 
@@ -150,7 +240,17 @@ $(document).ready(function(){
         </div>
     </div>
 
+    {% if user.is_authenticated %}
+    <div id="show_ratings">
+        <p id="rating_text"></p>
+    </div>
+
+    <div id="favourite_button_container">
+        <button type="submit">Favourite</button>
+    </div>
+
     <br/>
+    {% endif %}
 
     {% ifequal user.username recipe.creator.user.username %}
     <a href="{% url 'edit_recipe' recipe.recipe_name_slug %}">Edit Recipe</a>
