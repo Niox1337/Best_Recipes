@@ -10,6 +10,7 @@ Activate python 3.9 virtual enviroment. Go to project directory then perform
 pip install –r requirements.txt
 python manage.py migrate
 python population_script.py
+python manage.py runserver
 ```
 
 ## External Sources
