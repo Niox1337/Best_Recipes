@@ -26,9 +26,14 @@
         </form>
     </div>
     <div>
-        &#128293<strong>Trending</strong>
-        <div class="recipe-block">
-        </div>
+        <strong id="trending">&#128293 Trending</strong> <br />
+        {% for recipe in 'recipes' %}
+            <a href="{% url 'show_recipe' recipe.recipe_name_slug %}">
+                <span class="recipe-block">
+
+                </span>
+            </a>
+        {% endfor %}
     </div>
     <div>
     </div>

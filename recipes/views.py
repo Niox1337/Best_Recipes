@@ -12,7 +12,8 @@ from recipes.models_helpers import *
 # Create your views here.
 
 def index(request):
-    response = render(request, 'recipes/index.html')
+    top_recipes = Recipe.objects.all().order_by('-views', 'no_of_ratings')[:1]
+    response = render(request, 'recipes/index.html', {'recipes': top_recipes, })
     return response
 
 
