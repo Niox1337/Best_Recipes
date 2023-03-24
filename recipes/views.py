@@ -30,7 +30,7 @@ def user_login(request):
         else:
             return HttpResponse("Invalid username or password")
     else:
-        return render(request, 'recipes/login.html')
+        return render(request, 'recipes/../templates/user/login.html')
 
 
 def user_logout(request):
@@ -75,7 +75,7 @@ def sign_up(request):
         "registered": registered
     }
 
-    response = render(request, 'recipes/sign_up.html', context=context_dict)
+    response = render(request, 'recipes/../templates/user/sign_up.html', context=context_dict)
     return response
 
 def give_rating(request):
@@ -107,7 +107,6 @@ def get_rating(request):
 
 @login_required
 def edit_recipe(request, recipe_name_slug):
-    
     recipe_found = False
     found_recipe = None
 
@@ -160,11 +159,12 @@ def delete_recipe(request, recipe_name_slug):
     recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
 
     context_dict = {
-        "recipe" : recipe,
+        "recipe": recipe,
     }
 
     response = render(request, "recipes/delete_recipe.html", context=context_dict)
     return response
+
 
 @login_required
 def true_delete_recipe(request, recipe_name_slug):
@@ -174,11 +174,12 @@ def true_delete_recipe(request, recipe_name_slug):
     recipe.delete()
 
     context_dict = {
-        "recipe_name" : recipe_name,
+        "recipe_name": recipe_name,
     }
 
     return render(request, 'recipes/index.html')
     return response
+
 
 @login_required
 def new_recipe(request, user_name_slug):
@@ -222,7 +223,6 @@ def new_recipe(request, user_name_slug):
 
     response = render(request, 'recipes/new_recipe.html', context=context_dict)
     return response
-
 
 
 def show_tag(request, tag_name_slug):
@@ -290,6 +290,7 @@ def about(request):
     response = render(request, 'recipes/about.html')
     return response
 
+
 def profile(request, user_name_slug):
     user_name_slug = slugify(user_name_slug)
     user = get_user_by_user_name_slug(user_name_slug)
@@ -301,7 +302,7 @@ def profile(request, user_name_slug):
         "recipes": recipes
     }
 
-    response = render(request, "recipes/profile.html", context=context_dict)
+    response = render(request, "recipes/../templates/user/profile.html", context=context_dict)
     return response
 
 
@@ -317,5 +318,16 @@ def favourites(request, user_name_slug):
         "saved_recipes": saved_recipes
     }
 
-    response = render(request, "recipes/favourites.html", context=context_dict)
+    response = render(request, "recipes/../templates/user/favourites.html", context=context_dict)
+    return response
+
+
+def search(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        recipes = Recipe.objects.filter(name__contains=searched) | Recipe.objects.filter(
+            ingredients__contains=searched) | Recipe.objects.filter(text__contains=searched)
+        response = render(request, 'recipes/search.html', {'searched': searched, 'recipes': recipes, })
+    else:
+        response = render(request, 'recipes/search.html', {})
     return response
