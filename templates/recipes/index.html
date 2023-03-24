@@ -20,8 +20,10 @@
 
 {% block body_block %}
     <div id="search-box-container">
-        <form>
-            <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES">
+        <form method="post", action="{% url 'search' %}">
+            {% csrf_token %}
+            <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES"
+                   aria-label="Search" name="searched">
         </form>
     </div>
     <div>
