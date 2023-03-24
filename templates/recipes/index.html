@@ -1,9 +1,6 @@
+{% extends 'recipes/base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-
+{% block head_block %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script>
@@ -17,16 +14,15 @@
             }
         }
     </script>
-
-    <meta charset="UTF-8">
     <title>Best Recipes</title>
-    <link rel="stylesheet" href="{% static 'CSS/index_style.css' %}">
-</head>
-<body>
 
+{% endblock %}
 
+{% block body_block %}
     <div id="search-box-container">
-        <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES">
+        <form>
+            <input id="input" type="search" spellcheck="false" placeholder="EXPLORE OUR RECIPES">
+        </form>
     </div>
     <div>
         &#128293<strong>Trending</strong>
@@ -55,5 +51,4 @@
     </div>
     
     </div>
-</body>
-</html>
+{% endblock %}
