@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from datetime import date
 from django.urls import reverse
 from recipes.models import UserProfile, Recipe, Review, Rating
-import populate_recipes
+import population_script
 
 
 '''
