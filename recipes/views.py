@@ -77,6 +77,24 @@ def sign_up(request):
     response = render(request, 'user/sign_up.html', context=context_dict)
     return response
 
+@login_required
+def delete_profile(request):
+    response = render(request, 'user/delete_profile.html')
+    return response
+
+def handle_delete_profile(request):
+    if request.is_ajax and request.method == "GET":
+        user_name = request.GET.get("username", None)
+        delete_account = request.GET.get("delete_account", None)
+        
+        if delete_account == "true":
+            user = User.objects.get_or_create(username=user_name)[0]
+            user_profile = get_user_by_user_name_slug(slugify(user_name))
+            user.delete()
+            user_profile.delete()
+
+    return JsonResponse({}, status=200)
+
 
 def give_rating(request):
     # TODO: broken? gives double ratings

@@ -1,0 +1,28 @@
+{% extends 'user/profile_base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+{% block profile_head_block %}
+    <title>Delete Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="{% static 'JS/delete_profile.js' %}"></script>
+{% endblock %}
+
+{% block profile_body_block %}
+
+    <div>
+        <p>You are about to delete your profile. This cannot be undone!</p>
+        <br/>
+        <p>Are you sure you want to permanently delete your account?</div></p>
+        
+        <button id="yes_button">Yes</button>
+        <button id="no_button">No</button>
+
+    </div>
+
+    <div id="for_jquery">
+        <p id="username">{{ user.username }}</p>
+        <p id="handle_delete_url">{% url 'handle_delete_profile' %}</p>
+        <p id="logout_url">{% url 'logout' %}</p>
+    </div>
+
+{% endblock %}

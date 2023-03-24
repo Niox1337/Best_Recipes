@@ -1,3 +1,8 @@
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                        'Best_Recipes.settings')
+import django
+django.setup()
 from django.test import TestCase, Client
 from datetime import date
 from django.urls import reverse
@@ -92,12 +97,12 @@ class SignUpTest(TestCase):
         }
 
 class RatingsTest(TestCase):
-    def test_ensure_ratings_are_positive(self)
-    """
-    Ensures the number of ratings received for a recipe are positive or zero
-    """
-    rating = add_rating(info_dict)
-    self.assertEquals(rating.rating>=0, True)
+    def test_ensure_ratings_are_positive(self):
+        """
+        Ensures the number of ratings received for a recipe are positive or zero
+        """
+        rating = add_rating(info_dict)
+        self.assertEquals(rating.rating>=0, True)
 
     
 
@@ -126,7 +131,7 @@ class IndexAboutTestCase(TestCase):
         response = self.client.get(reverse('recipe:index'))
         self.assertEqual(response.status_code, 200)
 
-     def test_about(self):
+    def test_about(self):
         response = self.client.get(reverse('recipe:about'))
         self.assertEqual(response.status_code,200) 
 
@@ -257,7 +262,7 @@ class RecipeViewsTestCase(TestCase):
         self.assertEqual(response.context['recipe_creator'], self.user.profile.user_name_slug)
         self.assertTrue(Recipe.objects.filter(name='Updated Test Recipe').exists())
 
-  def test_edit_recipe_with_invalid_form(self):
+    def test_edit_recipe_with_invalid_form(self):
         self.client.login(username='testuser', password='testpass')
         url = reverse('edit_recipe', args=[self.recipe.recipe_name_slug])
         data = {

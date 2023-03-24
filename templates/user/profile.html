@@ -14,6 +14,12 @@
     </div>
 
     <div>
+        <a href="{% url 'delete_profile' %}">
+            <button id="delete_buttonn">Delete your profile</button>
+        </a>
+    </div>
+
+    <div>
         {% if recipes %}   
             {% for recipe in recipes %}
                 <a href="/recipes/{{ recipe.recipe_name_slug }}">{{ recipe.name }}</a>
