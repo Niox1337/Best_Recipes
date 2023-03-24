@@ -12,6 +12,11 @@
         Welcome to your profile {{ user.user.username }}
     </div>
     <div>
+        <a href="{% url 'update_profile' %}">
+            Update your information
+        </a>
+    </div>
+    <div>
         {% if recipes %}   
             {% for recipe in recipes %}
                 <a href="/recipes/{{ recipe.recipe_name_slug }}">{{ recipe.name }}</a>

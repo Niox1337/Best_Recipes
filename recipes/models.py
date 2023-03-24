@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     # TODO: do we need a minimum length for user_name, password, etc?
     first_name = models.CharField(max_length=FIRST_NAME_LEN, blank=True)
     last_name = models.CharField(max_length=LAST_NAME_LEN, blank=True)
-    date_of_birth = models.DateField(default=django.utils.timezone.now, blank=True)
+    date_of_birth = models.DateField(default=django.utils.timezone.now, blank=True, null=True)
     # TODO: look at how rango handled user passwords etc.
     user_description = models.TextField(max_length=USER_DESCRIPTION_LEN, blank=True)
     profile_picture = models.ImageField(upload_to='profile_images/', null=True, blank=True)

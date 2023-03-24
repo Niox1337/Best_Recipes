@@ -55,7 +55,8 @@ header{
 }
 
 .recipe-block{
-    margin-left: 290px;
+    margin-left: 330px;
+    margin-bottom: 30px;
     height: 250px;
     width: 350px;
     display: inline-block;
