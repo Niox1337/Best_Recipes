@@ -16,6 +16,32 @@ $(document).ready(function(){
 // TODO: we currenly dont unempty the first star - kinda minor aeshetic issue but still
 // TODO: we don't want users to be able to rate their own recipes
 
+function update_recipe_rating_div(rating_data) {
+    let rating_text = "Rating: " + rating_data["rating"] + " (" + rating_data["no_of_ratings"] + " ratings so far)";
+    $("#rating_text").text(rating_text)
+  }
+
+  function get_recipe_rating_data() {
+    $.ajax({
+        type: 'GET',
+                url: "{% url 'get_recipe_rating' %}",
+                data: {
+                    "recipe": "{{ recipe.recipe_name_slug }}",
+                },
+                success: function (response) {
+                    let rating = response["rating"];
+                    let no_of_ratings = response["no_of_ratings"];
+                    console.log("Got rating " + rating + " and no of ratings " + no_of_ratings);
+                    update_recipe_rating_div(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+  }
+
+  get_recipe_rating_data()
+
   function star_click(star_div_id) {
     let star_number = star_div_id.charAt(star_div_id.length - 1);
 
@@ -24,16 +50,19 @@ $(document).ready(function(){
                 url: "{% url 'give_rating' %}",
                 data: {
                     "rating": star_number,
-                    "user": "{{ recipe.creator.user.username }}",
+                    "user": "{{ user.username }}",
                     "recipe": "{{ recipe.recipe_name_slug }}",
                 },
                 success: function (response) {
                     console.log("it worked!!");
+                    get_recipe_rating_data()
                 },
                 error: function (response) {
                     console.log(response)
                 }
             })
+    
+    
 
   }
 
@@ -147,6 +176,10 @@ $(document).ready(function(){
         <div id="star_5" class="star">
             <img src="{% static 'star_empty.png' %}"  style="width:50px;height:50px;"/>
         </div>
+    </div>
+
+    <div id="show_ratings">
+        <p id="rating_text"></p>
     </div>
 
     <br/>

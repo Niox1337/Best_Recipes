@@ -68,6 +68,7 @@ def sign_up(request):
     return response
 
 def give_rating(request):
+    # TODO: broken? gives double ratings
     if request.is_ajax and request.method == "GET":
         given_rating = request.GET.get("rating", None)
         user = request.GET.get("user", None)
@@ -77,6 +78,7 @@ def give_rating(request):
         reicpe = get_recipe_by_recipe_name_slug(recipe_name_slug)
         
         rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
+        print(rating)
         rating.rating = int(given_rating)
         rating.save()
 
@@ -93,6 +95,16 @@ def get_rating(request):
         rating = Rating.objects.get_or_create(creator=creator, recipe=reicpe, recipe_or_review=True)[0]
 
     return JsonResponse({"rating": rating.rating}, status = 200)
+
+def get_recipe_rating(request):
+    if request.is_ajax and request.method == "GET":
+        recipe_name_slug = request.GET.get("recipe", None)
+        recipe = get_recipe_by_recipe_name_slug(recipe_name_slug)
+        total_rating = calcuate_recipe_rating(recipe)
+        # TODO: get_number_of_recipe_ratings gets wrong result? or get rating creates duplicates?
+        no_of_ratings = get_number_of_recipe_ratings(recipe)
+        
+    return JsonResponse({"rating": total_rating, "no_of_ratings": no_of_ratings}, status = 200)
 
 @login_required
 def edit_recipe(request, recipe_name_slug):

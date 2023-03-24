@@ -49,3 +49,21 @@ def get_review_by_id(id):
         raise Exception("More than one review with id " + str(id))
     else:
         return reviews[0]
+    
+def calcuate_recipe_rating(recipe):
+    total_rating = 0
+    no_of_ratings = 0
+    for rating in Rating.objects.all():
+        if rating.recipe == recipe:
+            total_rating += rating.rating
+            no_of_ratings += 1
+    if no_of_ratings > 0:
+        total_rating = total_rating / no_of_ratings
+    return total_rating
+
+def get_number_of_recipe_ratings(recipe):
+    no_of_ratings = 0
+    for rating in Rating.objects.all():
+        if rating.recipe == recipe:
+            no_of_ratings += 1
+    return no_of_ratings
