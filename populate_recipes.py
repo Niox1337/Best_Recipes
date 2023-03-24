@@ -232,6 +232,7 @@ vegetables\n\
     add_rating(test_recipe_rating)
     add_rating(test_review_rating)
 
+    print(calcuate_recipe_rating(get_recipe_by_recipe_name_slug(slugify(test_recipe_two["other"]["name"]))))
 
 def add_user_profile(info_dict):
 
@@ -308,6 +309,8 @@ def add_rating(info_dict):
     rating.review = keys["review"]
     rating.recipe_or_review = other["recipeOrReview"]
     rating.rating = other["rating"]
+    
+    rating.save()
 
 if __name__ == '__main__':
     print('Starting recipes population script...')
